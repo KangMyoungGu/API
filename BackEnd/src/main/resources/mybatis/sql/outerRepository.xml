@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="outerRepository">
+	<select id="selectOuterList" resultType="outerDto" parameterType="outerListParam">
+		SELECT 
+			COM_CD
+			, COM_SUB_CD
+			, COST_PRICE
+			, MOD_DATE
+			, MOD_USER_ID
+			, PROD_CD
+			, PROD_MASTER_IMG_NM
+			, PROD_MASTER_IMG_PATH
+			, PROD_NM
+			, REG_DATE
+			, REG_USER_ID
+			, SELL_PRICE
+			, USE_YN
+		FROM TBL_PROD_MASTER
+		WHERE COM_CD = #{comCode}
+		<if test='comSubCode != "" and comSubCode != null'>
+			AND COM_SUB_CD = #{comSubCode}
+		</if>
+	</select>
+<!-- 	
+	<select id="selectUserInfo" resultType="UserVo" parameterType="java.lang.String">
+		SELECT 
+			USER_ID
+			, USER_NAME
+			, USER_GENDER
+			, USER_POST_NUMBER
+			, USER_ADDRESS
+			, USER_ADDRESS_DETAIL
+		FROM CUSTOMER
+		WHERE USER_ID = #{userId}
+	</select>
+ -->
+ </mapper>
