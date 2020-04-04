@@ -9,4 +9,6 @@ public interface OuterRepository {
 
 	List<OuterDto> selectOuterLists(OuterListReqParam param);
 
+	List<OuterDto> selectOuterBestList(OuterListReqParam param);
+
 }

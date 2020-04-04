@@ -44,14 +44,16 @@ public class OuterController {
 	
 	@RequestMapping(value="/list", method = RequestMethod.POST)
 	public @ResponseBody RtDto getOuterList(HttpServletRequest request, @RequestBody OuterListReqParam param) throws IOException {
+		/*
+		 *상품 조회시에는 인증할 필요 없음. 
+		 */
 		RtDto rtDto = new RtDto();
-		
-		boolean chk = authAdapter.checkAuth(request.getHeader(ApiHeader.TOKEN));
-		if(!chk) {
-			rtDto.setRtCode(RtCode.RT_TOKEN_INVALID.getErrorCode());
-			rtDto.setRtMsg(RtCode.RT_TOKEN_INVALID.getErrorMessage());
-			return rtDto;
-		}
+//		boolean chk = authAdapter.checkAuth(request.getHeader(ApiHeader.TOKEN));
+//		if(!chk) {
+//			rtDto.setRtCode(RtCode.RT_TOKEN_INVALID.getErrorCode());
+//			rtDto.setRtMsg(RtCode.RT_TOKEN_INVALID.getErrorMessage());
+//			return rtDto;
+//		}
 
 
 		rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
@@ -64,4 +66,30 @@ public class OuterController {
 		}
 		return rtDto;
 	}
+	
+	@RequestMapping(value="/best", method = RequestMethod.POST)
+	public @ResponseBody RtDto getOuterBestList(HttpServletRequest request, @RequestBody OuterListReqParam param) throws IOException {
+		/*
+		 *상품 조회시에는 인증할 필요 없음. 
+		 */
+		RtDto rtDto = new RtDto();
+//		boolean chk = authAdapter.checkAuth(request.getHeader(ApiHeader.TOKEN));
+//		if(!chk) {
+//			rtDto.setRtCode(RtCode.RT_TOKEN_INVALID.getErrorCode());
+//			rtDto.setRtMsg(RtCode.RT_TOKEN_INVALID.getErrorMessage());
+//			return rtDto;
+//		}
+
+
+		rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+		rtDto.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+		List<OuterDto> result = outerService.selectOuterBestList(param);
+		System.out.println("outer");
+		System.out.println(result);
+		if(result.size() > 0) {
+			rtDto.setList(result);
+		}
+		return rtDto;
+	}
+
 }

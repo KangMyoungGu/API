@@ -22,4 +22,9 @@ public class OuterRepositoryImpl implements OuterRepository{
 		return sqlSession.selectList("outerRepository.selectOuterList", param);
 	}
 
+	@Override
+	public List<OuterDto> selectOuterBestList(OuterListReqParam param) {
+		return sqlSession.selectList("outerRepository.selectOuterBestList", param);
+	}
+
 }

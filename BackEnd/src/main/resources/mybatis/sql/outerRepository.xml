@@ -23,17 +23,25 @@
 			AND COM_SUB_CD = #{comSubCode}
 		</if>
 	</select>
-<!-- 	
-	<select id="selectUserInfo" resultType="UserVo" parameterType="java.lang.String">
+
+	<select id="selectOuterBestList" resultType="outerDto" parameterType="outerListParam">
 		SELECT 
-			USER_ID
-			, USER_NAME
-			, USER_GENDER
-			, USER_POST_NUMBER
-			, USER_ADDRESS
-			, USER_ADDRESS_DETAIL
-		FROM CUSTOMER
-		WHERE USER_ID = #{userId}
+			COM_CD
+			, COM_SUB_CD
+			, COST_PRICE
+			, MOD_DATE
+			, MOD_USER_ID
+			, PROD_CD
+			, PROD_MASTER_IMG_NM
+			, PROD_MASTER_IMG_PATH
+			, PROD_NM
+			, REG_DATE
+			, REG_USER_ID
+			, SELL_PRICE
+			, USE_YN
+		FROM TBL_PROD_MASTER
+		WHERE COM_CD = #{comCode}
+		ORDER BY SELL_COUNT DESC LIMIT 4
 	</select>
- -->
+
  </mapper>

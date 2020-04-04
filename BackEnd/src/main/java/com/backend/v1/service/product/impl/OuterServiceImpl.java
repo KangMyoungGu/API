@@ -24,4 +24,9 @@ public class OuterServiceImpl implements OuterService{
 		return outerReposiroty.selectOuterLists(param);
 	}
 
+	@Override
+	public List<OuterDto> selectOuterBestList(OuterListReqParam param) throws IOException {
+		return outerReposiroty.selectOuterBestList(param);
+	}
+
 }
