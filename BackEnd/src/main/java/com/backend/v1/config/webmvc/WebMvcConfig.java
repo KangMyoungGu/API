@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
+import com.backend.v1.ApiHeader;
 import com.backend.v1.common.token.interceptor.JwtInterceptor;
 import com.backend.v1.common.util.PropertiesUtil;
 
@@ -63,6 +65,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(jwtInterceptor)
 						.addPathPatterns("/*")
 						.excludePathPatterns(EXCLUDE_PATHS);
+    }
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+    	registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .exposedHeaders(ApiHeader.TOKEN);
+
     }
 
 	
