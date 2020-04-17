@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="outerRepository">
-	<select id="selectOuterList" resultType="outerDto" parameterType="outerListParam">
+	<select id="selectOuterList" resultType="outerDto" >
 		SELECT 
 			COM_CD
 			, COM_SUB_CD
@@ -18,10 +18,7 @@
 			, SELL_PRICE
 			, USE_YN
 		FROM TBL_PROD_MASTER
-		WHERE COM_CD = #{comCode}
-		<if test='comSubCode != "" and comSubCode != null'>
-			AND COM_SUB_CD = #{comSubCode}
-		</if>
+		WHERE COM_CD = 'OC'
 	</select>
 
 	<select id="selectOuterBestList" resultType="outerDto" parameterType="outerListParam">

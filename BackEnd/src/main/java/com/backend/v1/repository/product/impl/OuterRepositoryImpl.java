@@ -17,9 +17,9 @@ public class OuterRepositoryImpl implements OuterRepository{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<OuterDto> selectOuterLists(OuterListReqParam param) {
+	public List<OuterDto> selectOuterLists() {
 
-		return sqlSession.selectList("outerRepository.selectOuterList", param);
+		return sqlSession.selectList("outerRepository.selectOuterList");
 	}
 
 	@Override

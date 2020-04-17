@@ -20,8 +20,8 @@ public class OuterServiceImpl implements OuterService{
 	@Autowired private ImageUtil imageUtil;
 	
 	@Override
-	public List<OuterDto> selectOuterLists(OuterListReqParam param) throws IOException {
-		return outerReposiroty.selectOuterLists(param);
+	public List<OuterDto> selectOuterLists() throws IOException {
+		return outerReposiroty.selectOuterLists();
 	}
 
 	@Override

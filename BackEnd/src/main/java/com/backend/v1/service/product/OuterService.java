@@ -9,7 +9,7 @@ import com.backend.v1.data.param.product.OuterListReqParam;
 
 public interface OuterService {
 
-	List<OuterDto> selectOuterLists(OuterListReqParam param) throws IOException;
+	List<OuterDto> selectOuterLists() throws IOException;
 
 	List<OuterDto> selectOuterBestList(OuterListReqParam param) throws IOException;;
 

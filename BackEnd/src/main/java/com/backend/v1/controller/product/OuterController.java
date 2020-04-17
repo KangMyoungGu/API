@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,12 +43,14 @@ public class OuterController {
 	
 	@Autowired private OuterService outerService;
 	
-	@RequestMapping(value="/list", method = RequestMethod.POST)
-	public @ResponseBody RtDto getOuterList(HttpServletRequest request, @RequestBody OuterListReqParam param) throws IOException {
+	@RequestMapping(value="/list", method = RequestMethod.GET)
+	public @ResponseBody RtDto getOuterList(HttpServletRequest request, @RequestParam("itemType") String itemType) throws IOException {
+		System.out.println(itemType);
 		/*
 		 *상품 조회시에는 인증할 필요 없음. 
 		 */
 		RtDto rtDto = new RtDto();
+
 //		boolean chk = authAdapter.checkAuth(request.getHeader(ApiHeader.TOKEN));
 //		if(!chk) {
 //			rtDto.setRtCode(RtCode.RT_TOKEN_INVALID.getErrorCode());
@@ -55,12 +58,10 @@ public class OuterController {
 //			return rtDto;
 //		}
 
-
 		rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 		rtDto.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
-		List<OuterDto> result = outerService.selectOuterLists(param);
-		System.out.println("outer");
-		System.out.println(result);
+		List<OuterDto> result = outerService.selectOuterLists();
+
 		if(result.size() > 0) {
 			rtDto.setList(result);
 		}
