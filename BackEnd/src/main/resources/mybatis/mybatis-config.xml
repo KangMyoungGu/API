@@ -6,5 +6,11 @@
       <typeAliases>
             <typeAlias alias="outerListParam" type="com.backend.v1.data.param.product.OuterListReqParam"></typeAlias>
             <typeAlias alias="outerDto" type="com.backend.v1.data.dto.product.OuterDto"></typeAlias>
+
+            <typeAlias alias="accountParam" type="com.backend.v1.data.param.account.AccountReqParam"></typeAlias>
+            <typeAlias alias="accountDto" type="com.backend.v1.data.dto.account.AccountDto"></typeAlias>
+
+            <typeAlias alias="userLoginParam" type="com.backend.v1.data.param.account.UserLoginReqParam"></typeAlias>
+            <typeAlias alias="userDto" type="com.backend.v1.data.dto.account.UserDto"></typeAlias>
       </typeAliases>
 </configuration>
