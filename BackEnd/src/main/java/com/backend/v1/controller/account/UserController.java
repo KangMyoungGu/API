@@ -2,6 +2,7 @@ package com.backend.v1.controller.account;
 
 import com.backend.v1.data.dto.RtDto;
 import com.backend.v1.data.dto.account.AccountDto;
+import com.backend.v1.data.dto.account.UserDto;
 import com.backend.v1.service.account.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -36,37 +37,37 @@ public class UserController {
 	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public @ResponseBody
-	RtDto<SessionDomain> postLogin(@RequestBody UserLoginReqParam userLoginReqParam
-	){
-		if(userLoginReqParam.getLoginId().equals("")) throw new ParameterException(RtCode.RT_PARAMETER_ERROR);
+	RtDto<UserDto> postLogin(@RequestBody UserLoginReqParam userLoginReqParam){
 
-		if(userLoginReqParam.getPassWord().equals("")) throw new ParameterException(RtCode.RT_PARAMETER_ERROR);
-
-		RtDto<SessionDomain> rtDto = new RtDto<>();
-		AccountDto accountDto = accountService.getAccount(userLoginReqParam);
-
+		RtDto<UserDto> rtDto = new RtDto<>();
 		try{
+			accountService.checkValidation4Login(userLoginReqParam);
+
+			AccountDto accountDto = accountService.getAccount(userLoginReqParam);
+
 			if(accountDto != null) {
 				if(accountDto.getACCOUNT_PW().equals(userLoginReqParam.getPassWord())) {
 
 					String token = jwtService.createToken(userLoginReqParam.getLoginId(), userLoginReqParam, userLoginReqParam.getLoginId());
 					redisUtil.setRedisDataByString(userLoginReqParam.getLoginId(), token);
 
-					SessionDomain sessionDomain = new SessionDomain(userLoginReqParam.getLoginId(), token);
+					UserDto userDto = new UserDto(token, accountDto.getACCOUNT_ID(), accountDto.getACCOUNT_NAME());
 
 					rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 					rtDto.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 
-					rtDto.setRtData(sessionDomain);
+					rtDto.setRtData(userDto);
 				} else{
 					rtDto.setRtCode(RtCode.RT_LOGIN_PASSWORD_WRONG.getErrorCode());
 					rtDto.setRtMsg(RtCode.RT_LOGIN_PASSWORD_WRONG.getErrorMessage());
 				}
-
 			} else{
 				rtDto.setRtCode(RtCode.RT_USER_NOT_FOUND.getErrorCode());
 				rtDto.setRtMsg(RtCode.RT_USER_NOT_FOUND.getErrorMessage());
 			}
+		}catch (ParameterException e){
+			rtDto.setRtCode(RtCode.RT_PARAMETER_ERROR.getErrorCode());
+			rtDto.setRtMsg(RtCode.RT_PARAMETER_ERROR.getErrorMessage());
 		}catch (Exception e){
 			rtDto.setRtCode(RtCode.RT_INTERNAL_ERROR.getErrorCode());
 			rtDto.setRtMsg(RtCode.RT_INTERNAL_ERROR.getErrorMessage());

@@ -1,6 +1,7 @@
 package com.backend.v1.controller.account;
 
 import com.backend.v1.ApiHeader;
+import com.backend.v1.Exception.ParameterException;
 import com.backend.v1.RtCode;
 import com.backend.v1.adapter.AuthAdapter;
 import com.backend.v1.common.util.RedisUtil;
@@ -23,19 +24,23 @@ import java.util.List;
 @CrossOrigin
 public class AccountController {
 
-    @Autowired private AuthAdapter authAdapter;
-    @Autowired private RedisUtil redisUtil;
-    @Autowired private TokenUtil tokenUtil;
     @Autowired private AccountService accountService;
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
-    public @ResponseBody RtDto createAccount(HttpServletRequest request, @RequestBody AccountReqParam param) throws IOException {
+    public @ResponseBody RtDto createAccount(@RequestBody AccountReqParam accountReqParam) {
         RtDto rtDto = new RtDto();
-
-        accountService.createAccount(param);
-        rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
-        rtDto.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
-
+        try{
+            accountService.checkValidation4Account(accountReqParam);
+            accountService.createAccount(accountReqParam);
+            rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+            rtDto.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+        }catch (ParameterException e){
+            rtDto.setRtCode(RtCode.RT_PARAMETER_ERROR.getErrorCode());
+            rtDto.setRtMsg(RtCode.RT_PARAMETER_ERROR.getErrorMessage());
+        }catch (Exception e){
+            rtDto.setRtCode(RtCode.RT_INTERNAL_ERROR.getErrorCode());
+            rtDto.setRtMsg(RtCode.RT_INTERNAL_ERROR.getErrorMessage());
+        }
         return rtDto;
     }
 
