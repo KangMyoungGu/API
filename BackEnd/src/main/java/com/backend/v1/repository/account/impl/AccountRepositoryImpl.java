@@ -14,10 +14,11 @@ import java.util.Optional;
 @Repository
 public class AccountRepositoryImpl implements AccountRepository {
     @Autowired
+    @Qualifier("sqlSession")
     private SqlSession sqlSession;
 
     @Autowired
-    @Qualifier("secondarySqlSession")
+    @Qualifier("secondSqlSession")
     private SqlSession secondarySqlSession;
 
     @Override

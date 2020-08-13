@@ -31,10 +31,10 @@ public class DatabaseSecondConfig {
 	public DataSource secondDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 
-		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA.DRIVER.CLASS.NAME"));
-		dataSource.setUrl(propertiesUtil.getProperty("MARIA.URL"));
-		dataSource.setUsername(propertiesUtil.getProperty("MARIA.USER.NAME"));
-		dataSource.setPassword(propertiesUtil.getProperty("MARIA.USER.PASSWORD"));
+		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
+		dataSource.setUrl(propertiesUtil.getProperty("MARIA_URL"));
+		dataSource.setUsername(propertiesUtil.getProperty("MARIA_USER_NAME"));
+		dataSource.setPassword(propertiesUtil.getProperty("MARIA_USER_PASSWORD"));
 
 		dataSource.setDefaultAutoCommit(false);
 

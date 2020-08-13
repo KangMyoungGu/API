@@ -33,10 +33,10 @@ public class DatabaseJpaConfig {
 	public DataSource jpaDataSource() throws NoSuchAlgorithmException, UnsupportedEncodingException, GeneralSecurityException {
 		BasicDataSource dataSource = new BasicDataSource();
 
-		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA.DRIVER.CLASS.NAME"));
-		dataSource.setUrl(propertiesUtil.getProperty("MARIA.URL"));
-		dataSource.setUsername(propertiesUtil.getProperty("MARIA.USER.NAME"));
-		dataSource.setPassword(propertiesUtil.getProperty("MARIA.USER.PASSWORD"));
+		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
+		dataSource.setUrl(propertiesUtil.getProperty("MARIA_URL"));
+		dataSource.setUsername(propertiesUtil.getProperty("MARIA_USER_NAME"));
+		dataSource.setPassword(propertiesUtil.getProperty("MARIA_USER_PASSWORD"));
 
 		dataSource.setDefaultAutoCommit(false);
 
@@ -47,8 +47,8 @@ public class DatabaseJpaConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() throws NoSuchAlgorithmException, UnsupportedEncodingException, GeneralSecurityException {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(jpaDataSource());
-		em.setPackagesToScan(new String[] {"com.backend.v1.data.entity"});
-		
+		em.setPackagesToScan(new String[] {"com.backend.v1.data.entity.product"});
+											
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		em.setJpaProperties(additionalProperties());

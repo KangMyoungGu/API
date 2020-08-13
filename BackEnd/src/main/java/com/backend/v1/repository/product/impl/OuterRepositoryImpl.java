@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.backend.v1.data.dto.product.OuterDto;
@@ -14,6 +15,7 @@ import com.backend.v1.repository.product.OuterRepository;
 @Repository
 public class OuterRepositoryImpl implements OuterRepository{
 	@Autowired
+    @Qualifier("sqlSession")
 	private SqlSession sqlSession;
 
 	@Override
