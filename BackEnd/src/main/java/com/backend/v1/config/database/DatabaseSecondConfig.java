@@ -22,20 +22,19 @@ import com.backend.v1.common.util.PropertiesUtil;
 
 
 @Configuration
-public class DatabaseConfig {
+public class DatabaseSecondConfig {
 
 	@Autowired PropertiesUtil propertiesUtil;
 	@Autowired ApplicationContext applicationContext;
 
-	@Primary
-	@Bean(name="dataSource", destroyMethod="close")
-	public DataSource dataSource() {
+	@Bean(name="secondDataSource", destroyMethod="close")
+	public DataSource secondDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 
-		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
-		dataSource.setUrl(propertiesUtil.getProperty("MARIA_URL"));
-		dataSource.setUsername(propertiesUtil.getProperty("MARIA_USER_NAME"));
-		dataSource.setPassword(propertiesUtil.getProperty("MARIA_USER_PASSWORD"));
+		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA.DRIVER.CLASS.NAME"));
+		dataSource.setUrl(propertiesUtil.getProperty("MARIA.URL"));
+		dataSource.setUsername(propertiesUtil.getProperty("MARIA.USER.NAME"));
+		dataSource.setPassword(propertiesUtil.getProperty("MARIA.USER.PASSWORD"));
 
 		dataSource.setDefaultAutoCommit(false);
 
@@ -43,8 +42,8 @@ public class DatabaseConfig {
 	}
 
 	@Primary
-	@Bean(name="sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
+	@Bean(name="secondSqlSessionFactory")
+    public SqlSessionFactory secondSqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setConfigLocation(applicationContext.getResource("classpath:/mybatis/mybatis-config.xml"));
@@ -54,14 +53,14 @@ public class DatabaseConfig {
     }
 
 	@Primary
-    @Bean(name="sqlSession")
-    public SqlSessionTemplate sqlSession(@Autowired @Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    @Bean(name="secondSqlSession")
+    public SqlSessionTemplate secondSqlSession(@Autowired @Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
 	@Primary
-    @Bean(name="transactionManager")
-    public DataSourceTransactionManager transactionManager(@Autowired @Qualifier("dataSource") DataSource dataSource) {
+    @Bean(name="secondTransactionManager")
+    public DataSourceTransactionManager secondTransactionManager(@Autowired @Qualifier("dataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

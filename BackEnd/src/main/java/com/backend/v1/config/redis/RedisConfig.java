@@ -16,10 +16,7 @@ import redis.clients.jedis.JedisPoolConfig;
 @Configuration
 public class RedisConfig {
 
-		@Autowired
-		private PropertiesUtil propertiesUtil;
-		
-		
+
 		@Bean(name = "jedisTokenPool", destroyMethod = "close")
 		public JedisPool jedisTokenPool() {
 			JedisPoolConfig config = new JedisPoolConfig();
@@ -30,7 +27,7 @@ public class RedisConfig {
 			config.setTestOnReturn(true);
 			JedisPool pool;
 
-			pool = new JedisPool(config, propertiesUtil.getProperty("REDIS.IP"), Integer.parseInt(propertiesUtil.getProperty("REDIS.PORT")), 60, null);
+			pool = new JedisPool(config, PropertiesUtil.getProperty("REDIS_IP"), Integer.parseInt(PropertiesUtil.getProperty("REDIS_PORT")), 60, null);
 
 
 			return pool;
@@ -40,8 +37,8 @@ public class RedisConfig {
 		@Bean
 		public JedisConnectionFactory connectionFactory() {				
 			JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-			jedisConnectionFactory.setHostName(propertiesUtil.getProperty("REDIS.IP"));
-			jedisConnectionFactory.setPort(Integer.parseInt(propertiesUtil.getProperty("REDIS.PORT")));
+			jedisConnectionFactory.setHostName(PropertiesUtil.getProperty("REDIS_IP"));
+			jedisConnectionFactory.setPort(Integer.parseInt(PropertiesUtil.getProperty("REDIS_PORT")));
 			jedisConnectionFactory.setUsePool(true);
 			jedisConnectionFactory.afterPropertiesSet();
 			return jedisConnectionFactory;

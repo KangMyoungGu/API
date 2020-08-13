@@ -6,6 +6,8 @@ import com.backend.v1.Exception.UnauthorizedException;
 import com.backend.v1.common.util.PropertiesUtil;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -28,16 +30,21 @@ public class JwtServiceImpl implements JwtService {
 
 	private final Logger log = Logger.getLogger(JwtService.class);
 
-	@Autowired
-	private PropertiesUtil properties;
-
 	@Override
 	public <T> String createToken(String key, T data, String subject){
+		Map<String, Object> claims = new HashMap<String, Object>();
+		Long expiredTime = 1000*3600*24*Long.parseLong(PropertiesUtil.getProperty("TOKEN_EXPIRED_LIMIT"));
+		
+		Date now = new Date();
+		now.setTime(now.getTime() + expiredTime);
+		claims.put("userId", key);
+		claims.put("expiredDate", now.getTime());
+		
 		String jwt = Jwts.builder()
 						 .setHeaderParam("typ", "JWT")
 						 .setHeaderParam("regDate", System.currentTimeMillis())
-						 .setSubject(subject)
-						 .claim(key, data)
+						 .setSubject(key)
+						 .setClaims(claims)
 						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
 						 .compact();
 		return jwt;
@@ -46,7 +53,7 @@ public class JwtServiceImpl implements JwtService {
 	private byte[] generateKey(){
 		byte[] key = null;
 		try {
-			key = properties.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8");
+			key = PropertiesUtil.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			if(log.isInfoEnabled()){
 				e.printStackTrace();
@@ -65,7 +72,7 @@ public class JwtServiceImpl implements JwtService {
 		Jws<Claims> claims = null;
 		try {
 			claims = Jwts.parser()
-						 .setSigningKey(properties.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8"))
+						 .setSigningKey(PropertiesUtil.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8"))
 						 .parseClaimsJws(jwt);
 		} catch (Exception e) {
 			throw new UnauthorizedException();

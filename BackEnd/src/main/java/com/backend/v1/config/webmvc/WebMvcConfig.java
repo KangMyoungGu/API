@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 import com.backend.v1.ApiHeader;
 import com.backend.v1.common.token.interceptor.JwtInterceptor;
 import com.backend.v1.common.util.PropertiesUtil;
+import com.backend.v1.filter.CustomFilter;
 
 @Configuration
 @EnableWebMvc
@@ -73,6 +76,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .exposedHeaders(ApiHeader.TOKEN);
 
+    }
+    
+    @Bean
+    public FilterRegistrationBean filterRegistration() {
+    	FilterRegistrationBean registrationBean = new FilterRegistrationBean(); 
+    	registrationBean.setFilter(new CustomFilter());
+    	registrationBean.addUrlPatterns("/*");
+    	registrationBean.setName("CustomFilter");
+    	return registrationBean;
     }
 
 	
