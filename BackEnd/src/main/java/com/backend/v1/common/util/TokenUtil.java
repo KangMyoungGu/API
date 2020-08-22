@@ -17,25 +17,26 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class TokenUtil {
-	private static final String CLAIMS_KEY = "loginId";
+	private static final String CLAIMS_KEY = "userId";
+	private static final String EXPIRED_KEY = "expiredDate";
+
 	@Autowired
 	private PropertiesUtil propertiesUtil;
 	
 	public SessionDomain parseToken(String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
-	Claims claims = Jwts.parser()
+		SessionDomain sessionDomain = null;
+		try {
+			Claims claims = Jwts.parser()
 					.setSigningKey(propertiesUtil.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8"))
 					.parseClaimsJws(token)
 					.getBody();
-	
-	Map<String, String> map = (Map<String, String>) claims.get(claims.getSubject());
-
-	SessionDomain session = new SessionDomain();
-	try {
-		session.setUserId(map.get(CLAIMS_KEY));
-	} catch (Exception e) {
-		throw new UnsupportedJwtException("Wrong format claim message", e);
-	}
-
-	return session;
+			sessionDomain = new SessionDomain();
+			sessionDomain.setUserId(claims.get(CLAIMS_KEY, String.class));
+			sessionDomain.setExpiredDate(claims.get(EXPIRED_KEY, Long.class));
+			
+			return sessionDomain;
+		} catch (Exception e) {
+			return sessionDomain;
+		}
 	}
 }
