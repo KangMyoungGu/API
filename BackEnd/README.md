@@ -1,12 +1,4 @@
 # REST API Study
 
-###### 이미지 파일 storage 경로 설
-1. 최상위 경로에 있는 prod.zip 압축 해제
-2. 특정 경로에 storage/img 까지 폴더 생성
-   예) window > D:\storage\img
-       mac os > /User/사용자/storage/img
-3. 상품군별 폴더 생성하여 해당 상품군 폴더에 이미지 이동 (DB에는 현재 outer 까지만 있음)
-4. spring.profile.active에 해당하는 config.properties의 IMAGE.DEFAULT.FOLDER에
-   2에서 생성한 전체 경로 입력
-   예) window > IMAGE.DEFAULT.FOLDER=D:\storage\img
-       mac oc > IMAGE.DEFAULT.FOLDER=/Users/사용자/storage/img/
+###### 자넨 아직 이걸 볼 여유가 없다네...
+열심히 공부합니다^^
