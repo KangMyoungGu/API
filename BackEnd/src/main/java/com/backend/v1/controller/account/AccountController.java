@@ -11,7 +11,6 @@ import com.backend.v1.data.dto.product.OuterDto;
 import com.backend.v1.data.param.account.AccountReqParam;
 import com.backend.v1.data.param.product.OuterListReqParam;
 import com.backend.v1.service.account.AccountService;
-import com.backend.v1.service.product.OuterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
