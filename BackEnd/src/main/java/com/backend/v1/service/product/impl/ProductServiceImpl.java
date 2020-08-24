@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.backend.v1.data.entity.product.OuterEntity;
+import com.backend.v1.data.entity.product.ProdEntity;
 import com.backend.v1.repository.product.ProductRepository;
 import com.backend.v1.service.product.ProductService;
 
@@ -14,13 +14,13 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired ProductRepository productRepository;
 	
 	@Override
-	public void selectBestItemList() {
+	public List<ProdEntity> findProductBestItemList() {
 		// TODO Auto-generated method stub
-		productRepository.findBestItemList();
+		return productRepository.findProductBestItemList();
 	}
 
 	@Override
-	public List<OuterEntity> selectProductItemList(String prodCode) {
+	public List<ProdEntity> selectProductItemList(String prodCode) {
 		// TODO Auto-generated method stub
 		return productRepository.findProductItemList(prodCode);
 	}

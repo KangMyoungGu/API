@@ -2,12 +2,13 @@ package com.backend.v1.repository.product;
 
 import java.util.List;
 
-import com.backend.v1.data.entity.product.OuterEntity;
+import com.backend.v1.data.entity.product.ProdEntity;
 
-public interface ProductRepository {
 
-	void findBestItemList();
+public interface ProductRepository{
 
-	List<OuterEntity> findProductItemList(String prodCode);
+	List<ProdEntity> findProductBestItemList();
+
+	List<ProdEntity> findProductItemList(String prodCode);
 
 }

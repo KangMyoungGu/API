@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.v1.data.entity.product.OuterEntity;
+import com.backend.v1.data.entity.product.ProdEntity;
 import com.backend.v1.service.product.ProductService;
 
 @RestController
@@ -19,13 +19,12 @@ public class ProductController {
 	@Autowired ProductService productService;
 
 	@RequestMapping(value="/list", method = RequestMethod.GET)
-	public List<OuterEntity> getProductList(
+	public List<ProdEntity> getProductList(
 			@RequestParam(required = false) String prodCode
 	) {
 		if( "".equals(prodCode) || prodCode == null ) {
 			// bestItem 조회
-			//productService.selectBestItemList();
-			return null;
+			return productService.findProductBestItemList();
 		} else {
 			// 대분류 상품 리스트 조회
 			return productService.selectProductItemList(prodCode);
