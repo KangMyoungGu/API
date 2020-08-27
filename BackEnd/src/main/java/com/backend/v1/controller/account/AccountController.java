@@ -7,7 +7,6 @@ import com.backend.v1.adapter.AuthAdapter;
 import com.backend.v1.common.util.RedisUtil;
 import com.backend.v1.common.util.TokenUtil;
 import com.backend.v1.data.dto.RtClass;
-import com.backend.v1.data.dto.product.OuterDto;
 import com.backend.v1.data.param.account.AccountReqParam;
 import com.backend.v1.data.param.product.OuterListReqParam;
 import com.backend.v1.service.account.AccountService;

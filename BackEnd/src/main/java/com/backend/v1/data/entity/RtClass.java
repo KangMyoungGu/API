@@ -8,4 +8,6 @@ public class RtClass {
 	String rtMsg;
 	
 	Object data;
+	Object listData;
+
 }

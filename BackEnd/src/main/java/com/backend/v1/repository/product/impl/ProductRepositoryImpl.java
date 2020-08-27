@@ -2,23 +2,18 @@ package com.backend.v1.repository.product.impl;
 
 import java.util.List;
 
-import javax.inject.Provider;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
-import com.backend.v1.data.dto.product.OuterDto;
 import com.backend.v1.data.entity.product.ProdEntity;
+import com.backend.v1.data.entity.product.ProdInfoEntity;
 import com.backend.v1.data.entity.product.QBestEntity;
 import com.backend.v1.data.entity.product.QProdEntity;
+import com.backend.v1.data.entity.product.QProdInfoEntity;
 import com.backend.v1.repository.product.ProductRepository;
-import com.mysema.query.SearchResults;
-import com.mysema.query.jpa.JPQLQuery;
 import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.jpa.impl.JPAQueryFactory;
-import com.mysema.query.types.Projections;
 
 @Repository
 public class ProductRepositoryImpl implements ProductRepository{
@@ -53,7 +48,33 @@ public class ProductRepositoryImpl implements ProductRepository{
 		return list;
 	}
 
+	@Override
+	public ProdEntity findProductInfo(String prodCode) {
+		JPAQuery query = new JPAQuery(entityManager);
 
+		QProdEntity entity = new QProdEntity("prod");
+
+		ProdEntity data = query.from(entity)
+						.where(entity.prodCode.eq(prodCode))
+						.singleResult(entity);
+		
+		return data;
+	}
+
+	@Override
+	public List<ProdInfoEntity> findProductDetailImage(String prodCode) {
+		JPAQuery query = new JPAQuery(entityManager);
+		
+		QProdInfoEntity entity = new QProdInfoEntity("prodInfo");
+		
+		List<ProdInfoEntity> list = query.from(entity)
+									.where(entity.prodCode.eq(prodCode))
+									.where(entity.useYn.eq("Y"))
+									.orderBy(entity.sortSeq.asc())
+									.list(entity);
+		
+		return list;
+	}
 
 
 }
