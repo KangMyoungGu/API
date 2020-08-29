@@ -7,7 +7,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
-@PropertySource("classpath:/properties/config.properties")
+@PropertySource("classpath:/properties/${spring.profiles.active}/config.properties")
 public class PropertiesConfig{
 	
     @Bean

@@ -6,12 +6,10 @@ import com.backend.v1.RtCode;
 import com.backend.v1.adapter.AuthAdapter;
 import com.backend.v1.common.util.RedisUtil;
 import com.backend.v1.common.util.TokenUtil;
-import com.backend.v1.data.dto.RtDto;
-import com.backend.v1.data.dto.product.OuterDto;
+import com.backend.v1.data.dto.RtClass;
 import com.backend.v1.data.param.account.AccountReqParam;
 import com.backend.v1.data.param.product.OuterListReqParam;
 import com.backend.v1.service.account.AccountService;
-import com.backend.v1.service.product.OuterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +25,8 @@ public class AccountController {
     @Autowired private AccountService accountService;
 
     @RequestMapping(value="/create", method = RequestMethod.POST)
-    public @ResponseBody RtDto createAccount(@RequestBody AccountReqParam accountReqParam) {
-        RtDto rtDto = new RtDto();
+    public @ResponseBody RtClass createAccount(@RequestBody AccountReqParam accountReqParam) {
+        RtClass rtDto = new RtClass();
         try{
             accountService.checkValidation4Account(accountReqParam);
             accountService.createAccount(accountReqParam);

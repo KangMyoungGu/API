@@ -1,6 +1,6 @@
 package com.backend.v1.controller.account;
 
-import com.backend.v1.data.dto.RtDto;
+import com.backend.v1.data.dto.RtClass;
 import com.backend.v1.data.dto.account.AccountDto;
 import com.backend.v1.data.dto.account.UserDto;
 import com.backend.v1.service.account.AccountService;
@@ -37,9 +37,9 @@ public class UserController {
 	
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public @ResponseBody
-	RtDto<UserDto> postLogin(@RequestBody UserLoginReqParam userLoginReqParam){
+	RtClass<UserDto> postLogin(@RequestBody UserLoginReqParam userLoginReqParam){
 
-		RtDto<UserDto> rtDto = new RtDto<>();
+		RtClass<UserDto> rtDto = new RtClass<>();
 		try{
 			accountService.checkValidation4Login(userLoginReqParam);
 
@@ -56,7 +56,7 @@ public class UserController {
 					rtDto.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 					rtDto.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 
-					rtDto.setRtData(userDto);
+					rtDto.setData(userDto);
 				} else{
 					rtDto.setRtCode(RtCode.RT_LOGIN_PASSWORD_WRONG.getErrorCode());
 					rtDto.setRtMsg(RtCode.RT_LOGIN_PASSWORD_WRONG.getErrorMessage());

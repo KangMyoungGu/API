@@ -29,6 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             "/v1/api/user/login",
             "/v1/api/user/logout",
             "/v1/api/user/modify",
+            "/v1/api/test/**",
             "/swagger-ui.html",
             "/v2/api-docs",
             "/swagger-resources/**",
@@ -56,7 +57,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		for(String imageFolder : imageFolders) {
 		 	
 		registry.addResourceHandler("/img/" + imageFolder + "/**")
-			.addResourceLocations("file:///" + propertiesUtil.getProperty("IMAGE.DEFAULT.FOLDER") + imageFolder + "/")
+			.addResourceLocations("file://" + PropertiesUtil.getProperty("IMAGE.DEFAULT.FOLDER") + imageFolder + "/")
 			.setCachePeriod(3600)
 			.resourceChain(true)
 			.addResolver(new PathResourceResolver());
