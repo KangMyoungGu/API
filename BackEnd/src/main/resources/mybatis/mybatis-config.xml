@@ -4,8 +4,8 @@
 <configuration>
 	  <!-- sql resultType 객체선언. (여러개를 등록하여 alias 명으로 접근하여 사용) -->
       <typeAliases>
-            <typeAlias alias="outerListParam" type="com.backend.v1.data.param.product.OuterListReqParam"></typeAlias>
-            <typeAlias alias="outerDto" type="com.backend.v1.data.dto.product.OuterDto"></typeAlias>
+            <!-- <typeAlias alias="outerListParam" type="com.backend.v1.data.param.product.OuterListReqParam"></typeAlias>
+            <typeAlias alias="outerDto" type="com.backend.v1.data.dto.product.OuterDto"></typeAlias> -->
 
             <typeAlias alias="accountParam" type="com.backend.v1.data.param.account.AccountReqParam"></typeAlias>
             <typeAlias alias="accountDto" type="com.backend.v1.data.dto.account.AccountDto"></typeAlias>
