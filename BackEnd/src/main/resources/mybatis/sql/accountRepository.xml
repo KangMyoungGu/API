@@ -2,43 +2,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="accountRepository">
-    <insert id="createAccount" parameterType="accountParam">
-        INSERT INTO
-        TBL_ACCOUNT
-        (
-            ACCOUNT_ID
-            , ACCOUNT_PW
-            , ACCOUNT_NAME
-            , ACCOUNT_ADDRESS
-            , ACCOUNT_CONTACT_NUMBER
-            , ACCOUNT_EMAIL
-            , ACCOUNT_BIRTH
-            , ACCOUNT_REG_DT
-            , ACCOUNT_MOD_DT
-        ) VALUES
-        (
-            #{accountId}
-            , #{accountPw}
-            , #{accountName}
-            , #{accountAddress}
-            , #{accountContactNumber}
-            , #{accountEmail}
-            , #{accountBirth}
-            , NOW()
-            , NULL
-        )
-    </insert>
-    <select id="getAccount" parameterType="userLoginParam" resultType="accountDto">
-        SELECT
-            ACCOUNT_ID
-            , ACCOUNT_NAME
-            , ACCOUNT_PW
-        FROM TBL_ACCOUNT
-        WHERE
-            1=1
-        AND
-            ACCOUNT_ID = #{loginId}
-    </select>
-    
 
 </mapper>

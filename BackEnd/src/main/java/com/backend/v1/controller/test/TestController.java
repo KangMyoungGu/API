@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.v1.common.token.service.JwtService;
-import com.backend.v1.data.param.account.UserLoginReqParam;
-
-import io.swagger.models.HttpMethod;
+import com.backend.v1.data.param.user.UserParam.UserLoginParam;
 
 @RestController
 @RequestMapping(value="/v1/api/test")
@@ -22,10 +20,11 @@ public class TestController {
 	
 	@RequestMapping(value="/maketoken", method = RequestMethod.GET)
 	public HashMap<String, Object> createToken(@RequestParam("userId") String userId) {
-		UserLoginReqParam param = new UserLoginReqParam();
-		param.setLoginId(userId);
+		UserLoginParam param = UserLoginParam.builder()
+				.userId(userId)
+				.build();
 		
-		String token = jwtService.createToken(param.getLoginId(), param, param.getLoginId());
+		String token = jwtService.createToken(param.getUserId(), param, param.getUserId());
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("token", token);
