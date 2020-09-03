@@ -9,5 +9,7 @@ public class RtClass {
 	
 	Object data;
 	Object listData;
+	Object colorList;
+	Object sizeList;
 
 }

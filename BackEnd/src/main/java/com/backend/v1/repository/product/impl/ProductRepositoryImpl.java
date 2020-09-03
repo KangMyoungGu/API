@@ -5,8 +5,14 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import com.backend.v1.common.util.DBUtil;
+import com.backend.v1.data.dto.product.ProdColorDto;
+import com.backend.v1.data.dto.product.ProdSizeDto;
 import com.backend.v1.data.entity.product.ProdEntity;
 import com.backend.v1.data.entity.product.ProdInfoEntity;
 import com.backend.v1.data.entity.product.QBestEntity;
@@ -18,6 +24,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 @Repository
 public class ProductRepositoryImpl implements ProductRepository{
 	private @PersistenceContext EntityManager entityManager;
+	private @Autowired @Qualifier("sqlSession") SqlSession sqlSession;
 	
 	@Override
 	public List<ProdEntity> findProductBestItemList() {
@@ -74,6 +81,18 @@ public class ProductRepositoryImpl implements ProductRepository{
 									.list(entity);
 		
 		return list;
+	}
+
+
+	@Override
+	public List<ProdColorDto> findProductColorInfo(String prodCode) {
+		return sqlSession.selectList(DBUtil.statement(ProductRepository.class, "findProductColorInfo"),prodCode);
+	}
+
+
+	@Override
+	public List<ProdSizeDto> findProductSizeInfo(String prodCode) {
+		return sqlSession.selectList(DBUtil.statement(ProductRepository.class, "findProductSizeInfo"),prodCode);
 	}
 
 

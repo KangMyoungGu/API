@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.backend.v1.data.dto.product.ProdColorDto;
+import com.backend.v1.data.dto.product.ProdSizeDto;
 import com.backend.v1.data.entity.RtClass;
 import com.backend.v1.data.entity.product.ProdEntity;
 import com.backend.v1.data.entity.product.ProdInfoEntity;
@@ -32,11 +34,14 @@ public class ProductServiceImpl implements ProductService{
 	public RtClass selectProductInfo(String prodCode, RtClass rt) {
 		ProdEntity data = productRepository.findProductInfo(prodCode);
 		List<ProdInfoEntity> list = productRepository.findProductDetailImage(prodCode);
+		List<ProdColorDto> colorList = productRepository.findProductColorInfo(prodCode);
+		List<ProdSizeDto> sizeList = productRepository.findProductSizeInfo(prodCode);
 		rt.setData(data);
 		rt.setListData(list);
+		rt.setColorList(colorList);
+		rt.setSizeList(sizeList);
 		
 		return rt;
 
 	}
-
 }
