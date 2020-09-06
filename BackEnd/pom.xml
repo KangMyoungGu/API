@@ -278,6 +278,13 @@
 		    <version>3.7.4</version>
 		    <type>pom</type>
 		</dependency>
+		
+		<!-- elastic search -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+		</dependency>
+				
 	</dependencies>
 
 	<build>
