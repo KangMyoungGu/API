@@ -32,6 +32,9 @@ public class ProductController {
 		rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 
+		System.out.println("==========================");
+		System.out.println("prodCode ::: " + prodCode);
+		
 		try {
 			if( "".equals(prodCode) || prodCode == null ) {
 				// bestItem 조회
