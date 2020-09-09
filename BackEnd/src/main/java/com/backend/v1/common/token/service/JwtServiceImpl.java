@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,7 +26,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@Service("jwtService")
+@Component
 public class JwtServiceImpl implements JwtService {
 
 	private final Logger log = Logger.getLogger(JwtService.class);
@@ -53,6 +54,7 @@ public class JwtServiceImpl implements JwtService {
 	private byte[] generateKey(){
 		byte[] key = null;
 		try {
+			System.out.println(PropertiesUtil.getProperty("TOKEN_SECRET_KEY"));
 			key = PropertiesUtil.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			if(log.isInfoEnabled()){
@@ -85,6 +87,7 @@ public class JwtServiceImpl implements JwtService {
 	
 	@Override
 	public boolean isUsable(String jwt) {
+		System.out.println("jwt ::: " + jwt);
 		try{
 			Jws<Claims> claims = Jwts.parser()
 					  .setSigningKey(this.generateKey())
