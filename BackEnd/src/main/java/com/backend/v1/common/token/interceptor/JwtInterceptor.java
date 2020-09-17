@@ -30,7 +30,7 @@ public class JwtInterceptor implements HandlerInterceptor{
 			throws Exception { 
 		JSONObject jsonObj = new JSONObject();
 		
-		
+		System.out.println("============requestMethod ::: " + request.getMethod());
 		if (StringUtils.equals(request.getMethod(), "OPTIONS")) {
 			return true;
 		} else {
@@ -89,9 +89,11 @@ public class JwtInterceptor implements HandlerInterceptor{
 			
 			// 토큰은 정상이나, 요청한 사람의 token 정보가 아닐 경우 - api에 userId가 RequestBody로 요청 ( post 방식 )
 			String strRequestBody = request.getAttribute("requestBody").toString();
+			System.out.println("ch 1");
+			System.out.println(strRequestBody);
 			if(!strRequestBody.equals("")) {
 				JSONObject jsonRequestBody = new JSONObject(strRequestBody);
-				
+				System.out.println(jsonRequestBody.get("userId"));
 				if(jsonRequestBody.get("userId") != null) {
 					if(!jsonRequestBody.get("userId").equals(sessionDomain.getUserId())) {
 						jsonObj.put("rtCode", RtCode.RT_TOKEN_NOT_FORGERY.getErrorCode());

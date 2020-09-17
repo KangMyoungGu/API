@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +40,8 @@ public class JwtServiceImpl implements JwtService {
 		Date now = new Date();
 		now.setTime(now.getTime() + expiredTime);
 		claims.put("userId", key);
+		// 이거 다음에 수정 필요
+		claims.put("userNo", Integer.toString(new Random().nextInt(999999999)));
 		claims.put("expiredDate", now.getTime());
 		
 		String jwt = Jwts.builder()

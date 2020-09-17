@@ -17,8 +17,9 @@ import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class TokenUtil {
-	private static final String CLAIMS_KEY = "userId";
+	private static final String USERID_KEY = "userId";
 	private static final String EXPIRED_KEY = "expiredDate";
+	private static final String USERNO_KEY = "userNo";
 
 	@Autowired
 	private PropertiesUtil propertiesUtil;
@@ -31,7 +32,8 @@ public class TokenUtil {
 					.parseClaimsJws(token)
 					.getBody();
 			sessionDomain = new SessionDomain();
-			sessionDomain.setUserId(claims.get(CLAIMS_KEY, String.class));
+			sessionDomain.setUserId(claims.get(USERID_KEY, String.class));
+			sessionDomain.setUserNo(claims.get(USERNO_KEY, String.class));
 			sessionDomain.setExpiredDate(claims.get(EXPIRED_KEY, Long.class));
 			
 			return sessionDomain;
