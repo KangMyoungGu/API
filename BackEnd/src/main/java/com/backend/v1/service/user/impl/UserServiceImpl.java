@@ -55,6 +55,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserInfoDto signUp(UserSignUpParam param) {
+		
 		return null;
 	}
 

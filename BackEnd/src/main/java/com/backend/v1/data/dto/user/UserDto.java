@@ -1,5 +1,7 @@
 package com.backend.v1.data.dto.user;
 
+import com.backend.v1.data.entity.user.UserEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +29,17 @@ public class UserDto {
 		private String userBirth;
 		private String regDate;
 		private String modDate;
+		
+		public static UserInfoDto ofEntity(UserEntity entity) {
+			return UserInfoDto.builder()
+					.loginId(entity.getLoginId())
+					.email(entity.getEmail())
+					.name(entity.getName())
+					.phoneNumber(entity.getPhoneNumber())
+					.userBirth(entity.getUserBirth())
+					.regDate(entity.getRegDate())
+					.modDate(entity.getModDate())
+					.build();
+		}
 	}
 }
