@@ -49,7 +49,7 @@ public class CartController {
 		}
 
 		try {
-			System.out.println("여기!");
+			System.out.println("여기!"); 
 			SessionDomain sessionDomain = tokenUtil.parseToken(token);
 			cartService.insertCartList(sessionDomain,productCode, param);
 			
