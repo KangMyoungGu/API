@@ -1,4 +1,4 @@
-package com.backend.v1.data.entity.Order;
+package com.backend.v1.data.entity.order;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

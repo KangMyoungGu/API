@@ -2,8 +2,8 @@ package com.backend.v1.common.token.service;
 
 
 import com.backend.v1.ApiHeader;
-import com.backend.v1.Exception.UnauthorizedException;
 import com.backend.v1.common.util.PropertiesUtil;
+import com.backend.v1.exception.UnauthorizedException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;

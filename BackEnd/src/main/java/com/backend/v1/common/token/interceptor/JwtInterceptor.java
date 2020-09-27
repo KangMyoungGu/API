@@ -14,10 +14,10 @@ import org.springframework.web.servlet.HandlerMapping;
 
 import com.backend.v1.ApiHeader;
 import com.backend.v1.RtCode;
-import com.backend.v1.Exception.UnauthorizedException;
 import com.backend.v1.common.token.service.JwtService;
 import com.backend.v1.common.util.TokenUtil;
 import com.backend.v1.data.domain.account.SessionDomain;
+import com.backend.v1.exception.UnauthorizedException;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor{

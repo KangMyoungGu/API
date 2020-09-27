@@ -1,4 +1,4 @@
-package com.backend.v1.Exception;
+package com.backend.v1.exception;
 
 import com.backend.v1.RtCode;
 
