@@ -2,8 +2,8 @@ package com.backend.v1.common.token.service;
 
 
 import com.backend.v1.ApiHeader;
-import com.backend.v1.Exception.UnauthorizedException;
 import com.backend.v1.common.util.PropertiesUtil;
+import com.backend.v1.exception.UnauthorizedException;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -11,11 +11,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,7 +27,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-@Service("jwtService")
+@Component
 public class JwtServiceImpl implements JwtService {
 
 	private final Logger log = Logger.getLogger(JwtService.class);
@@ -38,6 +40,8 @@ public class JwtServiceImpl implements JwtService {
 		Date now = new Date();
 		now.setTime(now.getTime() + expiredTime);
 		claims.put("userId", key);
+		// 이거 다음에 수정 필요
+		claims.put("userNo", Integer.toString(new Random().nextInt(999999999)));
 		claims.put("expiredDate", now.getTime());
 		
 		String jwt = Jwts.builder()
@@ -53,6 +57,7 @@ public class JwtServiceImpl implements JwtService {
 	private byte[] generateKey(){
 		byte[] key = null;
 		try {
+			System.out.println(PropertiesUtil.getProperty("TOKEN_SECRET_KEY"));
 			key = PropertiesUtil.getProperty("TOKEN_SECRET_KEY").getBytes("UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			if(log.isInfoEnabled()){
@@ -85,6 +90,7 @@ public class JwtServiceImpl implements JwtService {
 	
 	@Override
 	public boolean isUsable(String jwt) {
+		System.out.println("jwt ::: " + jwt);
 		try{
 			Jws<Claims> claims = Jwts.parser()
 					  .setSigningKey(this.generateKey())

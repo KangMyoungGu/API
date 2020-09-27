@@ -32,10 +32,10 @@ public class DatabaseConfig {
 	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 
-		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
-		dataSource.setUrl(propertiesUtil.getProperty("MARIA_URL"));
-		dataSource.setUsername(propertiesUtil.getProperty("MARIA_USER_NAME"));
-		dataSource.setPassword(propertiesUtil.getProperty("MARIA_USER_PASSWORD"));
+		dataSource.setDriverClassName(PropertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
+		dataSource.setUrl(PropertiesUtil.getProperty("MARIA_URL"));
+		dataSource.setUsername(PropertiesUtil.getProperty("MARIA_USER_NAME"));
+		dataSource.setPassword(PropertiesUtil.getProperty("MARIA_USER_PASSWORD"));
 
 		dataSource.setDefaultAutoCommit(false);
 
@@ -44,7 +44,7 @@ public class DatabaseConfig {
 
 	@Primary
 	@Bean(name="sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactoryBean(@Autowired @Qualifier("dataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setConfigLocation(applicationContext.getResource("classpath:/mybatis/mybatis-config.xml"));

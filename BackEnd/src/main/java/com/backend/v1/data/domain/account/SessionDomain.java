@@ -20,6 +20,7 @@ import lombok.Setter;
 public class SessionDomain {
 	// Javascript Data type Number != Java Long type. so use userNo as cast String
 	private String userId;
+	private String userNo;
 	private Long expiredDate;
 	private String token;
 	private String role;

@@ -31,19 +31,18 @@ public class DatabaseSecondConfig {
 	public DataSource secondDataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 
-		dataSource.setDriverClassName(propertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
-		dataSource.setUrl(propertiesUtil.getProperty("MARIA_URL"));
-		dataSource.setUsername(propertiesUtil.getProperty("MARIA_USER_NAME"));
-		dataSource.setPassword(propertiesUtil.getProperty("MARIA_USER_PASSWORD"));
+		dataSource.setDriverClassName(PropertiesUtil.getProperty("MARIA_DRIVER_CLASS_NAME"));
+		dataSource.setUrl(PropertiesUtil.getProperty("MARIA_URL"));
+		dataSource.setUsername(PropertiesUtil.getProperty("MARIA_USER_NAME"));
+		dataSource.setPassword(PropertiesUtil.getProperty("MARIA_USER_PASSWORD"));
 
 		dataSource.setDefaultAutoCommit(false);
 
 		return dataSource;
 	}
 
-	@Primary
 	@Bean(name="secondSqlSessionFactory")
-    public SqlSessionFactory secondSqlSessionFactory(DataSource dataSource) throws Exception {
+    public SqlSessionFactory secondSqlSessionFactory(@Autowired @Qualifier("secondDataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         factoryBean.setConfigLocation(applicationContext.getResource("classpath:/mybatis/mybatis-config.xml"));
@@ -52,15 +51,13 @@ public class DatabaseSecondConfig {
         return factoryBean.getObject();
     }
 
-	@Primary
     @Bean(name="secondSqlSession")
-    public SqlSessionTemplate secondSqlSession(@Autowired @Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+    public SqlSessionTemplate secondSqlSession(@Autowired @Qualifier("secondSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-	@Primary
     @Bean(name="secondTransactionManager")
-    public DataSourceTransactionManager secondTransactionManager(@Autowired @Qualifier("dataSource") DataSource dataSource) {
+    public DataSourceTransactionManager secondTransactionManager(@Autowired @Qualifier("secondDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }
