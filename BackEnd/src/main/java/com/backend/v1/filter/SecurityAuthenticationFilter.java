@@ -38,6 +38,7 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
 			Map<String, Object> userMap = jwtService.get("userId");
 			SessionDomain session = new SessionDomain();
 			session.setUserId(userMap.get("userId").toString());
+			session.setRole(userMap.get("role").toString());
 			
 			UsernamePasswordAuthenticationToken auth = 
 	                new UsernamePasswordAuthenticationToken(session.getUserId(), null, null);

@@ -11,6 +11,7 @@ public enum RtCode {
 	RT_TOKEN_NOT_FORGERY("A300002", HttpStatus.INTERNAL_SERVER_ERROR, "Token Forgery"),
 
 	RT_PARAMETER_ERROR("A400001", HttpStatus.INTERNAL_SERVER_ERROR, "Parameter Error"),
+	RT_CONFICT_USER_LOGIN_ID("A400002", HttpStatus.CONFLICT, "Aleady Exist"),
 
 	RT_USER_NOT_FOUND("A500001", HttpStatus.OK, "User Not Found"),
 	RT_LOGIN_PASSWORD_WRONG("A500002", HttpStatus.OK, "User Not Found"),

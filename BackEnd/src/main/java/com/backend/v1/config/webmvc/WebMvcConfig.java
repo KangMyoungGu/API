@@ -29,8 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Autowired JwtInterceptor jwtInterceptor;
 	
     private static final String[] EXCLUDE_PATHS = {
-            "/v1/api/user/login",
-            "/v1/api/user/logout",
+            "/v1/api/user/**",
             "/v1/api/user/modify",
             "/v1/api/product/list/**",
             "/v1/api/product/info/**",
