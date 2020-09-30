@@ -3,7 +3,10 @@ package com.backend.v1.common.token.service;
 
 import com.backend.v1.ApiHeader;
 import com.backend.v1.common.util.PropertiesUtil;
+import com.backend.v1.data.entity.user.UserEntity;
 import com.backend.v1.exception.UnauthorizedException;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -43,6 +46,9 @@ public class JwtServiceImpl implements JwtService {
 		// 이거 다음에 수정 필요
 		claims.put("userNo", Integer.toString(new Random().nextInt(999999999)));
 		claims.put("expiredDate", now.getTime());
+		if(data instanceof UserEntity) {
+			claims.put("role", ((UserEntity) data).getRole());
+		}
 		
 		String jwt = Jwts.builder()
 						 .setHeaderParam("typ", "JWT")

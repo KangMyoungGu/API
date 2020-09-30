@@ -3,9 +3,11 @@ package com.backend.v1.controller.user;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,15 +36,16 @@ public class UserController {
 
 		RtClass<LoginDto> rt = new RtClass<LoginDto>();
 		
-		LoginDto dto = userService.login(param);
-		
-		if(dto == null) {
-			throw new ApiException();
+		try {
+			LoginDto dto = userService.login(param);
+			rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+			rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+			rt.setData(dto);
+		}catch(ApiException e) {
+			throw new ApiException(RtCode.RT_USER_NOT_FOUND);
+		}catch(Exception e) {
+			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}
-		
-		rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
-		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
-		rt.setData(dto);
 		
 		return rt;
 	}
@@ -61,12 +64,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/signUp")
-	public RtClass<Object> signUp(@RequestBody @Valid UserSignUpParam param, BindingResult result){
+	public RtClass<Object> signUp(@RequestBody @Valid UserSignUpParam param){
 		RtClass<Object> rt = new RtClass<Object>();
-		
-		if(result.hasErrors()) {
-			throw new ParameterException(RtCode.RT_PARAMETER_ERROR);  
-		}
 		
 		try {
 			
@@ -74,6 +73,8 @@ public class UserController {
 			
 			rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 			rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+		}catch(ApiException e) {
+			throw new ApiException(RtCode.RT_CONFICT_USER_LOGIN_ID);
 		}catch(Exception e) {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}
@@ -81,5 +82,49 @@ public class UserController {
 		
 		return rt;
 	}
+	
+//	/**
+//	 * @apiNote 회원 자신의 정보 조회 API
+//	 */
+//	@Secured({"ROLE_ADMIN", "ROLE_USER"})
+//	@GetMapping("/myinfo")
+//	public RtClass<Object> get(@AuthenticationPrincipal SecurityUser user){
+//		RtClass<Object> rt = new RtClass<Object>();
+//		
+//		try {
+//			
+//			
+//			rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+//			rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+//			rt.setDat
+//		}catch(Exception e) {
+//			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
+//		}
+//		
+//		
+//		return rt;
+//	}
+//	
+//	/**
+//	 * @apiNote 모든 회원 리스트 조회 API
+//	 */
+//	@Secured("ROLE_ADMIN")
+//	@GetMapping("")
+//	public RtClass<Object> getList(@AuthenticationPrincipal SecurityUser user){
+//		RtClass<Object> rt = new RtClass<Object>();
+//		
+//		try {
+//			
+//			userService.get(param);
+//			
+//			rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+//			rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+//		}catch(Exception e) {
+//			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
+//		}
+//		
+//		
+//		return rt;
+//	}
 
 }

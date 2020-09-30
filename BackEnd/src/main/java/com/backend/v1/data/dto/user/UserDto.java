@@ -15,6 +15,7 @@ public class UserDto {
 	public static class LoginDto {
 		private String token;
 		private String userId;
+		private String uuid;
 	}
 	
 	@Getter
