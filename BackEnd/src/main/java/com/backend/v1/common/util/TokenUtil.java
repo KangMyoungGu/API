@@ -20,6 +20,7 @@ public class TokenUtil {
 	private static final String USERID_KEY = "userId";
 	private static final String EXPIRED_KEY = "expiredDate";
 	private static final String USERNO_KEY = "userNo";
+	private static final String ROLE_KEY = "role";
 
 	@Autowired
 	private PropertiesUtil propertiesUtil;
@@ -34,6 +35,7 @@ public class TokenUtil {
 			sessionDomain = new SessionDomain();
 			sessionDomain.setUserId(claims.get(USERID_KEY, String.class));
 			sessionDomain.setUserNo(claims.get(USERNO_KEY, String.class));
+			sessionDomain.setRole(claims.get(ROLE_KEY, String.class));
 			sessionDomain.setExpiredDate(claims.get(EXPIRED_KEY, Long.class));
 			
 			return sessionDomain;
