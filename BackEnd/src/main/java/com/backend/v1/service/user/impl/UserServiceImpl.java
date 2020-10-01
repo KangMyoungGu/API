@@ -32,16 +32,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private boolean validateLoginId(String loginId) {
+	private boolean validateUserId(String userId) {
 		return userRepository
-			.findByLoginId(loginId)
+			.findByUserId(userId)
 			.isEmpty();
 	}
 	
 	@Override
 	public LoginDto login(UserLoginParam param) {
 		
-		UserEntity user = userRepository.findByLoginId(param.getUserId())
+		UserEntity user = userRepository.findByUserId(param.getUserId())
 				.orElseThrow(() -> new ApiException(RtCode.RT_USER_NOT_FOUND));
 		
 		if(!new BCryptPasswordEncoder().matches(param.getPassword(), user.getPassword())) {
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public UserInfoDto signUp(UserSignUpParam param) {
-		if(!validateLoginId(param.getLoginId())) {
+		if(!validateUserId(param.getUserId())) {
 			throw new ApiException();
 		}
 		

@@ -30,7 +30,7 @@ public class UserParam {
 	@Builder
 	public static class UserSignUpParam {
 		@NotEmpty
-		private String loginId;
+		private String userId;
 		@NotEmpty
 		private String password;
 		@NotEmpty @Email

@@ -15,15 +15,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.backend.v1.ApiHeader;
 import com.backend.v1.common.token.service.JwtService;
+import com.backend.v1.common.util.TokenUtil;
+import com.backend.v1.data.domain.account.SecurityUser;
 import com.backend.v1.data.domain.account.SessionDomain;
 
 
 @Component
 public class SecurityAuthenticationFilter extends OncePerRequestFilter {
 
-	@Value("${TOKEN_SECRET_KEY}")
-	private String tokenHeader;
+	private String tokenHeader = "X-BACKEND-TOKEN";
 	
 	@Autowired
 	private JwtService jwtService;
@@ -35,13 +37,11 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
 		String token = request.getHeader(tokenHeader);
 		if(token != null) {
 			
-			Map<String, Object> userMap = jwtService.get("userId");
-			SessionDomain session = new SessionDomain();
-			session.setUserId(userMap.get("userId").toString());
-			session.setRole(userMap.get("role").toString());
+			SessionDomain sessionDomain = new TokenUtil().parseToken(request.getHeader(ApiHeader.TOKEN));
+			SecurityUser user = new SecurityUser(sessionDomain);
 			
 			UsernamePasswordAuthenticationToken auth = 
-	                new UsernamePasswordAuthenticationToken(session.getUserId(), null, null);
+	                new UsernamePasswordAuthenticationToken(user, null, null);
 			SecurityContextHolder.getContext().setAuthentication(auth);
 		}
 		filterChain.doFilter(request, response);

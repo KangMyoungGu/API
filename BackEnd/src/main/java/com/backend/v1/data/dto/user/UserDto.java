@@ -22,7 +22,7 @@ public class UserDto {
     @AllArgsConstructor
     @Builder
 	public static class UserInfoDto {
-		private String loginId;
+		private String userId;
 		private String password;
 		private String email;
 		private String name;
@@ -33,7 +33,7 @@ public class UserDto {
 		
 		public static UserInfoDto ofEntity(UserEntity entity) {
 			return UserInfoDto.builder()
-					.loginId(entity.getLoginId())
+					.userId(entity.getUserId())
 					.email(entity.getEmail())
 					.name(entity.getName())
 					.phoneNumber(entity.getPhoneNumber())

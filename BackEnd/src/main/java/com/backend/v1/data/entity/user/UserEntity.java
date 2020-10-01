@@ -37,7 +37,7 @@ public class UserEntity {
 	private String userCode;
 	
 	@Column(name = "USER_ID")
-	private String loginId;
+	private String userId;
 	
 	@Column(name = "USER_PASSWORD")
 	private String password;
@@ -73,7 +73,7 @@ public class UserEntity {
 
 		return UserEntity.builder()
 				.userCode(String.format("US%s", dateStr))
-				.loginId(param.getLoginId())
+				.userId(param.getUserId())
 				.password(new BCryptPasswordEncoder().encode(param.getPassword()))
 				.role(Role.USER)
 				.email(param.getEmail())
