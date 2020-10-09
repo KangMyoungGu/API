@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.backend.v1.repository.stat.StatRepository">
+
+	<select id="getCountOfEachProduct" resultType="com.backend.v1.data.dto.stat.CountOfEachProductDto">
+select code.com_sub_nm as productName, prod.cnt
+from (
+	select com_cd, com_sub_cd, count(1) as cnt from mall.tbl_prod_master group by com_cd, com_sub_cd
+) prod
+left join mall.tbl_comcode_sub code on prod.com_cd = code.com_cd and prod.com_sub_cd = code.com_sub_cd
+order by cnt desc, productName;
+	</select>
+	
+</mapper>
