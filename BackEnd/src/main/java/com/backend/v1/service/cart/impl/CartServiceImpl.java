@@ -1,6 +1,8 @@
 package com.backend.v1.service.cart.impl;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.backend.v1.common.util.DateUtil;
 import com.backend.v1.data.domain.account.SessionDomain;
 import com.backend.v1.data.dto.cart.CartDetailDto;
+import com.backend.v1.data.entity.cart.CartDetailEntity;
 import com.backend.v1.data.entity.cart.CartMasterEntity;
 import com.backend.v1.data.param.cart.CartItemInfoParam;
 import com.backend.v1.data.param.cart.CartParam;
@@ -18,7 +21,7 @@ import com.backend.v1.service.cart.CartService;
 
 @Service
 public class CartServiceImpl implements CartService{
-	@Autowired CartRepository cartRepository;
+	@Autowired private CartRepository cartRepository;
 	
 	@Override
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
@@ -60,4 +63,14 @@ public class CartServiceImpl implements CartService{
 		return 0;
 	}
 
+	@Override
+	public List<CartMasterEntity> selectCartList(String userId) {
+		return cartRepository.selectCartList(userId);
+	}
+
+	@Override
+	public List<CartDetailEntity> selectCartItemList(String userId) {
+		return cartRepository.selectCartItemList(userId);
+
+	}
 }
