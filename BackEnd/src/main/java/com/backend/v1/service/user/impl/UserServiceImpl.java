@@ -33,9 +33,10 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	
 	private boolean validateUserId(String userId) {
-		return userRepository
-			.findByUserId(userId)
-			.isEmpty();
+		return true;
+//		return userRepository
+//			.findByUserId(userId)
+//			.isEmpty();
 	}
 	
 	@Override

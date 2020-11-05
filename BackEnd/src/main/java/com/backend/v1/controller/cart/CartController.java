@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.v1.ApiHeader;
@@ -19,6 +20,7 @@ import com.backend.v1.data.entity.RtClass;
 import com.backend.v1.data.param.cart.CartParam;
 import com.backend.v1.exception.ApiException;
 import com.backend.v1.exception.ParameterException;
+import com.backend.v1.facade.cart.CartFacade;
 import com.backend.v1.service.cart.CartService;
 
 @RestController
@@ -27,6 +29,7 @@ import com.backend.v1.service.cart.CartService;
 public class CartController {
 	@Autowired TokenUtil tokenUtil;
 	@Autowired CartService cartService;
+	@Autowired CartFacade cartFacade;
 	
 	@RequestMapping(value = "/{productCode}", method = RequestMethod.POST)
 	public RtClass postCartItem(
@@ -34,8 +37,6 @@ public class CartController {
 			,@RequestBody (required = true) CartParam param
 			,@RequestHeader(value = ApiHeader.TOKEN) String token
 	) {
-		
-		
 		RtClass rt = new RtClass();
 		rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
@@ -49,11 +50,9 @@ public class CartController {
 		}
 
 		try {
-			System.out.println("여기!"); 
 			SessionDomain sessionDomain = tokenUtil.parseToken(token);
 			cartService.insertCartList(sessionDomain,productCode, param);
 			
-
 			return rt;
 		} catch(ParameterException pe) {
 			pe.printStackTrace();
@@ -63,6 +62,20 @@ public class CartController {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}
 
+	}
+
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public RtClass getCartItem(@RequestParam("userId") String userId) {
+		RtClass rt = new RtClass();
+		
+		if("".equals(userId) || userId == null) {
+			rt.setRtCode(RtCode.RT_PARAMETER_ERROR.getErrorCode());
+			rt.setRtMsg(RtCode.RT_PARAMETER_ERROR.getErrorMessage());
+			return rt;
+		}
+		
+		return cartFacade.selectCartItemList(userId);
+		
 	}
 
 	
