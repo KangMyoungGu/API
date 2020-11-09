@@ -6,8 +6,6 @@ import com.backend.v1.common.util.PropertiesUtil;
 import com.backend.v1.data.entity.user.UserEntity;
 import com.backend.v1.exception.UnauthorizedException;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
