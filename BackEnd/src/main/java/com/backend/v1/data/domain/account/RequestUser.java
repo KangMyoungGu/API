@@ -8,14 +8,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class SecurityUser implements UserDetails {
+public class RequestUser implements UserDetails {
 	
 	private final String prefix = "ROLE_";
 	
 	private String userId;
 	private List<GrantedAuthority> authorities;
 	
-	public SecurityUser(SessionDomain session) {
+	public RequestUser(SessionDomain session) {
 		
 		this.authorities = new ArrayList<GrantedAuthority>();
 		

@@ -37,14 +37,9 @@ public class OrderEntity {
 	private String addrCode;
 	
 	/**
-	 * 총 주문 금액
+	 * 쿠폰 FK
 	 */
-	@Column(name = "TOTAL_PRICE")
-	private String totalPrice;
+	@Column(name = "COUPON_CD")
+	private String couponCode;
 	
-	/**
-	 * 환불 여부
-	 */
-	@Column(name = "IS_REFUNDED")
-	private Boolean isRefunded;
 }

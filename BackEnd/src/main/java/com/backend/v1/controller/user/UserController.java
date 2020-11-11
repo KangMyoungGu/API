@@ -3,24 +3,20 @@ package com.backend.v1.controller.user;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.v1.RtCode;
-import com.backend.v1.data.domain.account.SecurityUser;
+import com.backend.v1.data.domain.account.RequestUser;
 import com.backend.v1.data.dto.RtClass;
 import com.backend.v1.data.dto.user.UserDto.LoginDto;
 import com.backend.v1.data.param.user.UserParam.UserLoginParam;
 import com.backend.v1.data.param.user.UserParam.UserSignUpParam;
 import com.backend.v1.exception.ApiException;
-import com.backend.v1.exception.ParameterException;
 import com.backend.v1.service.user.UserService;
 
 @RestController
@@ -52,7 +48,7 @@ public class UserController {
 	
 	
 	@PostMapping("/logout")
-	public RtClass<Object> logout(@AuthenticationPrincipal SecurityUser user)
+	public RtClass<Object> logout(@AuthenticationPrincipal RequestUser user)
 	{
 		RtClass<Object> rt = new RtClass<Object>();
 		userService.logout(user.getUserId());

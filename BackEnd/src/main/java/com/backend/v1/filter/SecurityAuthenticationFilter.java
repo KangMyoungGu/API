@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.backend.v1.ApiHeader;
 import com.backend.v1.common.token.service.JwtService;
 import com.backend.v1.common.util.TokenUtil;
-import com.backend.v1.data.domain.account.SecurityUser;
+import com.backend.v1.data.domain.account.RequestUser;
 import com.backend.v1.data.domain.account.SessionDomain;
 
 
@@ -38,7 +38,7 @@ public class SecurityAuthenticationFilter extends OncePerRequestFilter {
 		if(token != null) {
 			
 			SessionDomain sessionDomain = new TokenUtil().parseToken(request.getHeader(ApiHeader.TOKEN));
-			SecurityUser user = new SecurityUser(sessionDomain);
+			RequestUser user = new RequestUser(sessionDomain);
 			
 			UsernamePasswordAuthenticationToken auth = 
 	                new UsernamePasswordAuthenticationToken(user, null, null);

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "tbl_order_detail")
 public class OrderDetailEntity {
 	
@@ -29,4 +31,9 @@ public class OrderDetailEntity {
 	@Column(name = "ORDER_QUANTITY")
 	private String orderQuantity;
 	
+	/**
+	 * 할인가포함 상품당 주문 금액
+	 */
+	@Column(name = "PRODUCT_PRICE")
+	private String productPrice;
 }
