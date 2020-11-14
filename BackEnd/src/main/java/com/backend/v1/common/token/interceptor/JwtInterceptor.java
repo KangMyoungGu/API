@@ -92,7 +92,7 @@ public class JwtInterceptor implements HandlerInterceptor{
 			System.out.println("ch 1");
 			System.out.println(strRequestBody);
 			if(!strRequestBody.equals("")) {
-				// multipart/form-data 요청이 들어올 경우 제
+				// multipart/form-data 요청이 들어올 경우 제외
 				if(request.getContentType().indexOf("multipart/form-data") == -1) {
 					JSONObject jsonRequestBody = new JSONObject(strRequestBody);
 					System.out.println(jsonRequestBody.get("userId"));
