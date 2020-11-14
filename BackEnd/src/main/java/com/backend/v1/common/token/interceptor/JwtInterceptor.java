@@ -92,17 +92,20 @@ public class JwtInterceptor implements HandlerInterceptor{
 			System.out.println("ch 1");
 			System.out.println(strRequestBody);
 			if(!strRequestBody.equals("")) {
-				JSONObject jsonRequestBody = new JSONObject(strRequestBody);
-				System.out.println(jsonRequestBody.get("userId"));
-				if(jsonRequestBody.get("userId") != null) {
-					if(!jsonRequestBody.get("userId").equals(sessionDomain.getUserId())) {
-						jsonObj.put("rtCode", RtCode.RT_TOKEN_NOT_FORGERY.getErrorCode());
-						jsonObj.put("rtMsg", RtCode.RT_TOKEN_NOT_FORGERY.getErrorMessage());
-						response.setContentType("application/json");
-						response.setStatus(RtCode.RT_TOKEN_NOT_FORGERY.getHttpStatus().value());
-						response.getWriter().write(jsonObj.toString());;
-						
-						return false;
+				// multipart/form-data 요청이 들어올 경우 제
+				if(request.getContentType().indexOf("multipart/form-data") == -1) {
+					JSONObject jsonRequestBody = new JSONObject(strRequestBody);
+					System.out.println(jsonRequestBody.get("userId"));
+					if(jsonRequestBody.get("userId") != null) {
+						if(!jsonRequestBody.get("userId").equals(sessionDomain.getUserId())) {
+							jsonObj.put("rtCode", RtCode.RT_TOKEN_NOT_FORGERY.getErrorCode());
+							jsonObj.put("rtMsg", RtCode.RT_TOKEN_NOT_FORGERY.getErrorMessage());
+							response.setContentType("application/json");
+							response.setStatus(RtCode.RT_TOKEN_NOT_FORGERY.getHttpStatus().value());
+							response.getWriter().write(jsonObj.toString());;
+							
+							return false;
+						}
 					}
 				}
 			}

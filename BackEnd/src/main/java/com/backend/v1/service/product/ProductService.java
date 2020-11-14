@@ -17,5 +17,8 @@ public interface ProductService {
 
 	// 상품 상세 정보
 	RtClass selectProductInfo(String prodCode, RtClass rt);
+	
+	//상품 등록
+	int insertProductItem(ProdEntity prodEntity);
 
 }

@@ -70,5 +70,27 @@ public class ProductController {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}
 	}
+	
+	@RequestMapping(value = "/add/item", method = RequestMethod.POST)
+	public RtClass postItem() {
+		//개발진행중
+		//@RequestParam에 files는 input 객체에 name이다.
+		RtClass rt = new RtClass();
+		rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+
+
+		try {			
+			//productService.insertProductItem(file);
+			return rt;
+		} catch(ParameterException pe) {
+			pe.printStackTrace();
+			throw new ParameterException(RtCode.RT_PARAMETER_ERROR);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
+		}
+
+	}
 }
 
