@@ -12,9 +12,40 @@ public class OrderDto {
     @AllArgsConstructor
     @Builder
 	public static class OrderListDto {
-		String orderCode;
-		String orderDate;
-		String productPrice;
-		OrderStatus orderStatus;
+		
+		/**
+		 * 주문번호
+		 */
+		private String orderCode;
+		
+		/**
+		 * 주문일자
+		 */
+		private String orderDate;
+		
+		/**
+		 * 할인가
+		 */
+		private String discountedPrice; 
+		
+		/**
+		 * 상품코드
+		 */
+		private String prodCode;
+		
+		/**
+		 * 상품명 
+		 */
+		private String prodName;
+		
+		/**
+		 * 상품가격(정가)
+		 */
+		private String sellPrice;
+		
+		/**
+		 * 주문상태
+		 */
+		private OrderStatus orderStatus;
 	}
 }

@@ -27,6 +27,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * @apiNote 로그인 API
+	 */
 	@PostMapping("/login")
 	public RtClass<LoginDto> login(@RequestBody @Valid UserLoginParam param){
 
@@ -46,7 +49,9 @@ public class UserController {
 		return rt;
 	}
 	
-	
+	/**
+	 * @apiNote 로그아웃 API
+	 */
 	@PostMapping("/logout")
 	public RtClass<Object> logout(@AuthenticationPrincipal RequestUser user)
 	{
@@ -59,6 +64,9 @@ public class UserController {
 		return rt;
 	}
 	
+	/**
+	 * @apiNote 회원 가입 API
+	 */
 	@PostMapping("/signUp")
 	public RtClass<Object> signUp(@RequestBody @Valid UserSignUpParam param){
 		RtClass<Object> rt = new RtClass<Object>();
