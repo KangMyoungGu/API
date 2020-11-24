@@ -42,8 +42,6 @@ public class OrderController {
 		} catch (Exception e) {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}
-		
-        System.out.println("ggg");
 
 		return rt;
 	}
