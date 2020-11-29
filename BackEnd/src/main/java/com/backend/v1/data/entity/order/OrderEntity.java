@@ -1,9 +1,18 @@
 package com.backend.v1.data.entity.order;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import com.backend.v1.common.util.DateUtil;
+
+import lombok.Builder;
+
+@Builder
 @Entity(name = "tbl_order")
 public class OrderEntity {
 
@@ -32,4 +41,30 @@ public class OrderEntity {
 	@Column(name = "ADDR_CD")
 	private String addrCode;
 	
+	/**
+	 * row 생성일자
+	 */
+	@Column(name = "REG_DATE")
+	private String regDate;
+	
+	/**
+	 * row 수정일자
+	 */
+	@Column(name = "MODE_DATE")
+	private String modDate;
+	
+	public static OrderEntity of(String userCode, String addrCode) {
+
+		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmssssss");
+		String dateStr = format.format(Calendar.getInstance().getTime());
+
+		return OrderEntity.builder()
+				.orderCode(String.format("OR%s", dateStr))
+				.orderDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
+				.userCode(userCode)
+				.addrCode(addrCode)
+				.regDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
+				.modDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
+				.build();
+	}
 }

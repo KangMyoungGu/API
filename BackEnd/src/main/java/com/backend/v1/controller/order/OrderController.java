@@ -54,7 +54,7 @@ public class OrderController {
 	}
 
 	/**
-	 * @apiNote 주문 API
+	 * @apiNote 주문등록 API
 	 */
 	@SuppressWarnings("rawtypes")
 	@Secured("ROLE_USER")

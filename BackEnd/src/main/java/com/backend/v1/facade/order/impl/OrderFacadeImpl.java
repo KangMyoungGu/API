@@ -13,9 +13,6 @@ public class OrderFacadeImpl implements OrderFacade {
 	@Autowired
 	private OrderService orderService;
 	
-//	@Autowired
-//	private Orderdetailservice, orderstatusservice.... 
-	
 	@Override
 	public void postOrder(OrderALLReqParam param, String userId) {
 		

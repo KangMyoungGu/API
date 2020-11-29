@@ -10,4 +10,41 @@ ALTER TABLE `tbl_user`
 
 ALTER TABLE `tbl_user`
 	ADD COLUMN `USER_UUID` VARCHAR(32) NOT NULL COMMENT '회원UUID' AFTER `MODE_DATE`;
+
+
+
+
+-- 2020-11-29
+
+create table tbl_order(
+ORDER_CD varchar(20) NOT NULL COMMENT '주문고유키',
+ORDER_DATE datetime NOT NULL COMMENT '주문날짜',
+USER_CD varchar(20) NOT NULL COMMENT '주문자 FK', 
+ADDR_CD varchar(20) NOT NULL COMMENT '배송주소',
+REG_DATE datetime NOT NULL COMMENT '주문등록일자',
+MODE_DATE datetime DEFAULT NULL COMMENT '주문수정일자',
+PRIMARY KEY(ORDER_CD)
+);
+
+create table tbl_order_detail(
+ORDER_DETAIL_CD varchar(20) NOT NULL COMMENT '주문상세고유키',
+ORDER_CD varchar(20) NOT NULL COMMENT '주문FK',
+PRODUCT_CD varchar(20) NOT NULL COMMENT '상품FK', 
+ORDER_QUANTITY INT NOT NULL DEFAULT 1 COMMENT '제품수량',
+PRODUCT_PRICE INT NOT NULL COMMENT '할인가포함 주문금액', 
+COUPON_CD varchar(20) COMMENT '쿠폰FK',
+REG_DATE datetime NOT NULL COMMENT '주문상세등록일자',
+MODE_DATE datetime DEFAULT NULL COMMENT '주문상세수정일자',
+PRIMARY KEY(ORDER_DETAIL_CD)
+);
+
+create table tbl_order_status(
+ORDER__STATUS_CD varchar(20) NOT NULL COMMENT '주문상태고유키',
+ORDER_CD varchar(20) NOT NULL COMMENT '주문FK',
+ORDER_STATUS varchar(20) NOT NULL COMMENT'주문상태',
+PROCESSING_DATE datetime NOT NULL COMMENT'처리일자',
+REG_DATE datetime NOT NULL COMMENT '주문상태등록일자',
+MODE_DATE datetime DEFAULT NULL COMMENT '주문상태수정일자',
+PRIMARY KEY(ORDER__STATUS_CD)
+);
 	

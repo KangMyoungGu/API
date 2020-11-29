@@ -1,9 +1,5 @@
 package com.backend.v1.data.enums;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 public enum OrderStatus {
-	
+	PRIPARING_PRODUCT, PRIPARING_DELIVER, DURING_DELIVERY, DELIVERY_COMPLETE, COMPLETED
 }
