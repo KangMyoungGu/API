@@ -14,9 +14,11 @@ import com.backend.v1.common.util.DateUtil;
 import com.backend.v1.data.param.order.OrderParam.OrderALLReqParam;
 
 import lombok.Builder;
+import lombok.Getter;
 
 @Builder
 @Entity(name = "tbl_order_detail")
+@Getter
 public class OrderDetailEntity {
 	
 	@Id

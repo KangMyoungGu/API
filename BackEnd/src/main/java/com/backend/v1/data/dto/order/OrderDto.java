@@ -11,7 +11,7 @@ public class OrderDto {
 	@Getter
     @AllArgsConstructor
     @Builder
-	public static class OrderListDto {
+	public static class OrderDetailDto {
 		
 		/**
 		 * 주문번호
@@ -26,7 +26,12 @@ public class OrderDto {
 		/**
 		 * 할인가
 		 */
-		private String discountedPrice; 
+		private String discountedPrice;
+		
+		/**
+		 * 수량
+		 */
+		private Integer orderQuantity;
 		
 		/**
 		 * 상품코드

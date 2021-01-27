@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backend.v1.RtCode;
 import com.backend.v1.data.domain.account.RequestUser;
 import com.backend.v1.data.dto.RtClass;
-import com.backend.v1.data.dto.order.OrderDto.OrderListDto;
+import com.backend.v1.data.dto.order.OrderDto.OrderDetailDto;
 import com.backend.v1.data.param.order.OrderParam.OrderALLReqParam;
 import com.backend.v1.exception.ApiException;
 import com.backend.v1.facade.order.OrderFacade;
@@ -29,22 +29,22 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	@Autowired
-	private OrderFacade orderFacade;
+	//@Autowired
+	//private OrderFacade orderFacade;
 
 	/**
 	 * @apiNote 나의 주문내역 조회 API
 	 */
 	@Secured("ROLE_USER")
 	@GetMapping("/mypage/order_list")
-	public RtClass<List<OrderListDto>> getMyOrderList(@AuthenticationPrincipal RequestUser requestUser) {
+	public RtClass<List<OrderDetailDto>> getMyOrderList(@AuthenticationPrincipal RequestUser requestUser) {
 
-		RtClass<List<OrderListDto>> rt = new RtClass<List<OrderListDto>>();
+		RtClass<List<OrderDetailDto>> rt = new RtClass<List<OrderDetailDto>>();
 		rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
 		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 
 		try {
-			List<OrderListDto> orderList = orderService.getListBy(requestUser.getUserId());
+			List<OrderDetailDto> orderList = orderService.getListBy(requestUser.getUserId());
 			rt.setData(orderList);
 		} catch (Exception e) {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
@@ -66,7 +66,7 @@ public class OrderController {
 		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 		
 		try {
-			orderFacade.postOrder(param, requestUser.getUserId());
+			orderService.postOrder(param, requestUser.getUserId());
 		} catch(Exception e) {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}
