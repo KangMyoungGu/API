@@ -13,12 +13,16 @@ import javax.persistence.Id;
 import com.backend.v1.common.util.DateUtil;
 import com.backend.v1.data.param.order.OrderParam.OrderALLReqParam;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Entity(name = "tbl_order_detail")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDetailEntity {
 	
 	@Id
@@ -88,7 +92,10 @@ public class OrderDetailEntity {
 		return detailList;
 	}
 	
-	public static OrderDetailEntity validateAndGetPrice() {
-		return null;
+	public void validatePriceAndPrice(String price, Integer discountPercent) {
+		Integer priceInt = Integer.parseInt(price);
+		priceInt = (priceInt*(100-discountPercent))/100;
+		price = priceInt.toString();
+		this.prodPrice = price;
 	}
 }

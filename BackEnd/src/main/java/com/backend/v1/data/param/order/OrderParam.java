@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 public class OrderParam {
 
@@ -14,6 +15,7 @@ public class OrderParam {
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	@AllArgsConstructor
 	@Builder
+	@ToString
 	public static class OrderReqParam {
 		
 		/**
@@ -37,6 +39,7 @@ public class OrderParam {
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	@AllArgsConstructor
 	@Builder
+	@ToString
 	public static class OrderALLReqParam{
 		private List<OrderReqParam> orderParamList;
 		private String addrCode;

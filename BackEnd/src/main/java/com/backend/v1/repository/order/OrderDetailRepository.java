@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.backend.v1.data.entity.order.OrderDetailEntity;
 
-public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, String>{
+public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, String> {
 
 	List<OrderDetailEntity> findAllByOrderCodeIn(List<String> orderCodeList);
-	
+
 }

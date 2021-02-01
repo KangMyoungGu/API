@@ -10,12 +10,17 @@ import javax.persistence.Id;
 
 import com.backend.v1.common.util.DateUtil;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Builder
 @Entity(name = "tbl_order")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderEntity {
 
 	/**

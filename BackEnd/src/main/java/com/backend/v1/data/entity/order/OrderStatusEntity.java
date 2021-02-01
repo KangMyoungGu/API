@@ -13,10 +13,16 @@ import javax.persistence.Id;
 import com.backend.v1.common.util.DateUtil;
 import com.backend.v1.data.enums.OrderStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Entity(name = "tbl_order_status")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class OrderStatusEntity {
 	
 	
@@ -55,7 +61,7 @@ public class OrderStatusEntity {
 	@Column(name = "MODE_DATE")
 	private String modDate;
 	
-	public static OrderStatusEntity of(String orderCode) {
+	public static OrderStatusEntity of(String orderCode, OrderStatus orderStatus) {
 		
 		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmssssss");
 		String dateStr = format.format(Calendar.getInstance().getTime());
@@ -63,7 +69,7 @@ public class OrderStatusEntity {
 		return OrderStatusEntity.builder()
 				.orderStatusCode(String.format("OS%s", dateStr))
 				.orderCode(orderCode)
-				.orderStatus(OrderStatus.PRIPARING_PRODUCT)
+				.orderStatus(orderStatus)
 				.procDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
 				.regDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
 				.modDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
