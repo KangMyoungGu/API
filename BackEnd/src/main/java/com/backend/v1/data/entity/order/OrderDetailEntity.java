@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +29,7 @@ public class OrderDetailEntity {
 	
 	@Id
 	@Column(name = "ORDER_DETAIL_CD")
-	private String orderProdCode;
+	private String orderDetailCode;
 	
 	/**
 	 * 주문코드 FK
@@ -73,12 +75,13 @@ public class OrderDetailEntity {
 	
 	public static List<OrderDetailEntity> ofAll(OrderALLReqParam param, String orderCode) {
 		
-		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmssssss");
+		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		
 		List<OrderDetailEntity> detailList = new ArrayList<OrderDetailEntity>();
 		param.getOrderParamList().stream().forEach(o -> {
 			OrderDetailEntity entity = OrderDetailEntity.builder()
-					.orderProdCode(String.format("OD%s", format.format(Calendar.getInstance().getTime())))
+					.orderDetailCode(String.format("OD%s%s", format.format(Calendar.getInstance().getTime()),
+							UUID.randomUUID().toString().substring(0, 2)))
 					.orderCode(orderCode)
 					.prodCode(o.getProdCode())
 					.orderQuantity(o.getCount())
@@ -92,6 +95,12 @@ public class OrderDetailEntity {
 		return detailList;
 	}
 	
+	/**
+	 * <p>상품 정가와 쿠폰 할인률(%) 를 입력받아 주문 금액을 계산한다</p> 
+	 * 
+	 * @param price 상품 정가
+	 * @param discountPercent 쿠폰 할인률(0~100) %
+	 */
 	public void validatePriceAndPrice(String price, Integer discountPercent) {
 		Integer priceInt = Integer.parseInt(price);
 		priceInt = (priceInt*(100-discountPercent))/100;

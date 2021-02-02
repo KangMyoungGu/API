@@ -14,6 +14,7 @@ import com.backend.v1.data.dto.order.OrderDto.OrderDetailDto;
 import com.backend.v1.data.entity.order.OrderDetailEntity;
 import com.backend.v1.data.entity.order.OrderEntity;
 import com.backend.v1.data.entity.order.OrderStatusEntity;
+import com.backend.v1.data.entity.product.ProdEntity;
 import com.backend.v1.data.entity.user.UserEntity;
 import com.backend.v1.data.enums.OrderStatus;
 import com.backend.v1.data.param.order.OrderParam.OrderALLReqParam;
@@ -21,6 +22,7 @@ import com.backend.v1.exception.ApiException;
 import com.backend.v1.repository.order.OrderDetailRepository;
 import com.backend.v1.repository.order.OrderRepository;
 import com.backend.v1.repository.order.OrderStatusRepository;
+import com.backend.v1.repository.product.ProductRepository;
 import com.backend.v1.repository.user.UserRepository;
 import com.backend.v1.service.order.OrderService;
 
@@ -39,7 +41,8 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	int i = 0;
+	@Autowired
+	private ProductRepository productRepository;
 	
 	@Override
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
@@ -52,24 +55,26 @@ public class OrderServiceImpl implements OrderService {
 		
 		List<OrderDetailDto> detailListDto = new ArrayList<OrderDetailDto>();
 		
-		
-		
 		orderDetailEntityList.stream().forEach(o -> {
+			
+			OrderStatusEntity orderStatus = orderStatusRepository.findByOrderCode(o.getOrderCode());
+			ProdEntity prod = productRepository.findProductInfo(o.getProdCode());	//TODO native query 가 더 성능상 좋을 것 같음.
 			
 			OrderDetailDto detailDto = OrderDetailDto.builder()
 					.orderCode(o.getOrderCode())
 					.orderDate(o.getRegDate())
 					.orderQuantity(o.getOrderQuantity())
-					.prodCode("codododoe" + i)
-					.prodName("바지")
-					.discountedPrice("25000")
-					.sellPrice("3000")
-					.orderStatus(OrderStatus.COMPLETED)
+					.prodCode(o.getProdCode())
+					.prodName(prod.getProdName())
+					.prodMasterImagePath(prod.getProdMasterImagePath())
+					.prodMasterImageName(prod.getProdMasterImageName())
+					.discountedPrice(o.getProdPrice())
+					.sellPrice(prod.getSellPrice())
+					.orderStatus(orderStatus.getOrderStatus())
 					.build();
 			
 					detailListDto.add(detailDto);
 					
-					i++;
 		});
 		
 		return detailListDto;
@@ -86,7 +91,8 @@ public class OrderServiceImpl implements OrderService {
 		
 		List<OrderDetailEntity> orderDetailEntityList = OrderDetailEntity.ofAll(param, order.getOrderCode());
 		orderDetailEntityList.stream().forEach(d -> {
-			d.validatePriceAndPrice(/* TODO 조회해온 상품 정가 */ "10000", /* TODO 쿠폰 할인률 변수로 */ 10);
+			ProdEntity prod = productRepository.findProductInfo(d.getProdCode());	//TODO native query 가 더 성능상 좋을 것 같음.
+			d.validatePriceAndPrice(prod.getSellPrice(), /* TODO 쿠폰 할인률 변수로 */ 10);
 		});
 		
 		orderDetailRepository.saveAll(orderDetailEntityList);

@@ -49,6 +49,16 @@ public class OrderDto {
 		private String sellPrice;
 		
 		/**
+		 * 상품대표이미지경로
+		 */
+		private String prodMasterImagePath;
+		
+		/**
+		 * 대표이미지파일명
+		 */
+		private String prodMasterImageName;
+		
+		/**
 		 * 주문상태
 		 */
 		private OrderStatus orderStatus;
