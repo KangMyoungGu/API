@@ -16,7 +16,13 @@ public enum RtCode {
 	RT_USER_NOT_FOUND("A500001", HttpStatus.OK, "User Not Found"),
 	RT_LOGIN_PASSWORD_WRONG("A500002", HttpStatus.OK, "User Not Found"),
 
+	// USER 에게 뭔가 요청이 허용될 권한이 없음
+	RT_FORBIDDEN_ACCESS("A600001", HttpStatus.FORBIDDEN, "Forbidden Access"),
 	
+	// 주문 정책으로 인한 사유
+	RT_FORBIDDEN_BY_ORDER_POLICY("A600001", HttpStatus.BAD_REQUEST, "Forbidden By Policy"),
+	
+	// 서버 에러
 	RT_INTERNAL_ERROR("A999999", HttpStatus.INTERNAL_SERVER_ERROR, "Server Error");
 	
 	

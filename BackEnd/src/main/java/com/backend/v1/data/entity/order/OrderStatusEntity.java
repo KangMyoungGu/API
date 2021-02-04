@@ -8,7 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.backend.v1.common.util.DateUtil;
 import com.backend.v1.data.enums.OrderStatus;
@@ -33,8 +35,9 @@ public class OrderStatusEntity {
 	/**
 	 * 주문 FK
 	 */
+	@ManyToOne(fetch = FetchType.LAZY)
 	@Column(name = "ORDER_CD")
-	private String orderCode;
+	private OrderEntity order;
 	
 	/**
 	 * 주문상태
@@ -61,14 +64,14 @@ public class OrderStatusEntity {
 	@Column(name = "MODE_DATE")
 	private String modDate;
 	
-	public static OrderStatusEntity of(String orderCode, OrderStatus orderStatus) {
+	public static OrderStatusEntity of(OrderEntity order, OrderStatus orderStatus) {
 		
 		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmssssss");
 		String dateStr = format.format(Calendar.getInstance().getTime());
 		
 		return OrderStatusEntity.builder()
 				.orderStatusCode(String.format("OS%s", dateStr))
-				.orderCode(orderCode)
+				.order(order)
 				.orderStatus(orderStatus)
 				.procDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))
 				.regDate(new DateUtil().getTodayByString("yyyy-MM-dd HH:mm:ss"))

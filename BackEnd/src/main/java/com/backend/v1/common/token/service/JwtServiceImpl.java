@@ -1,27 +1,23 @@
 package com.backend.v1.common.token.service;
 
 
-import com.backend.v1.ApiHeader;
-import com.backend.v1.common.util.PropertiesUtil;
-import com.backend.v1.data.entity.user.UserEntity;
-import com.backend.v1.exception.UnauthorizedException;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.backend.v1.ApiHeader;
+import com.backend.v1.common.util.PropertiesUtil;
+import com.backend.v1.data.entity.user.UserEntity;
+import com.backend.v1.exception.UnauthorizedException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -41,11 +37,10 @@ public class JwtServiceImpl implements JwtService {
 		Date now = new Date();
 		now.setTime(now.getTime() + expiredTime);
 		claims.put("userId", key);
-		// 이거 다음에 수정 필요
-		claims.put("userNo", Integer.toString(new Random().nextInt(999999999)));
 		claims.put("expiredDate", now.getTime());
 		if(data instanceof UserEntity) {
 			claims.put("role", ((UserEntity) data).getRole());
+			claims.put("userNo", ((UserEntity) data).getUserCode());
 		}
 		
 		String jwt = Jwts.builder()

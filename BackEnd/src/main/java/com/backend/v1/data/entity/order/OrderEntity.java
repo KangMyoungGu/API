@@ -48,6 +48,8 @@ public class OrderEntity {
 	@Column(name = "ADDR_CD")
 	private String addrCode;
 	
+	//TODO 결제 수단이 빠짐....
+	
 	/**
 	 * row 생성일자
 	 */

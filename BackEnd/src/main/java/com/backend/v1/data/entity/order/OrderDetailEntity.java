@@ -5,14 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.backend.v1.common.util.DateUtil;
+import com.backend.v1.data.entity.product.ProdEntity;
 import com.backend.v1.data.param.order.OrderParam.OrderALLReqParam;
 
 import lombok.AllArgsConstructor;
@@ -34,8 +39,9 @@ public class OrderDetailEntity {
 	/**
 	 * 주문코드 FK
 	 */
-	@Column(name = "ORDER_CD")
-	private String orderCode;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "ORDER_CD")
+	private OrderEntity order;
 	
 	/**
 	 * 상품코드 FK
@@ -73,7 +79,7 @@ public class OrderDetailEntity {
 	@Column(name = "MODE_DATE")
 	private String modDate;
 	
-	public static List<OrderDetailEntity> ofAll(OrderALLReqParam param, String orderCode) {
+	public static List<OrderDetailEntity> ofAll(OrderALLReqParam param, OrderEntity order) {
 		
 		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		
@@ -82,7 +88,7 @@ public class OrderDetailEntity {
 			OrderDetailEntity entity = OrderDetailEntity.builder()
 					.orderDetailCode(String.format("OD%s%s", format.format(Calendar.getInstance().getTime()),
 							UUID.randomUUID().toString().substring(0, 2)))
-					.orderCode(orderCode)
+					.order(order)
 					.prodCode(o.getProdCode())
 					.orderQuantity(o.getCount())
 					.couponCode(o.getCouponCode())

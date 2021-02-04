@@ -7,6 +7,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +19,6 @@ import com.backend.v1.data.dto.RtClass;
 import com.backend.v1.data.dto.order.OrderDto.OrderDetailDto;
 import com.backend.v1.data.param.order.OrderParam.OrderALLReqParam;
 import com.backend.v1.exception.ApiException;
-import com.backend.v1.facade.order.OrderFacade;
 import com.backend.v1.service.order.OrderService;
 
 @RestController
@@ -44,7 +44,7 @@ public class OrderController {
 		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 
 		try {
-			List<OrderDetailDto> orderList = orderService.getListBy(requestUser.getUserId());
+			List<OrderDetailDto> orderList = orderService.getListBy(requestUser.getSession().getUserNo());
 			rt.setData(orderList);
 		} catch (Exception e) {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
@@ -66,7 +66,29 @@ public class OrderController {
 		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
 		
 		try {
-			orderService.postOrder(param, requestUser.getUserId());
+			orderService.postOrder(param, requestUser.getSession().getUserNo());
+		} catch(Exception e) {
+			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
+		}
+
+		return rt;
+	}
+	
+	/**
+	 * @apiNote 주문 취소
+	 * @return
+	 */
+	@SuppressWarnings("rawtypes")
+	@Secured("ROLE_USER")
+	@PostMapping("/{orderCode}")
+	public RtClass cancelOrder(@PathVariable String orderCode, @AuthenticationPrincipal RequestUser requestUser) {
+		
+		RtClass rt = new RtClass();
+		rt.setRtCode(RtCode.RT_SUCCESS.getErrorCode());
+		rt.setRtMsg(RtCode.RT_SUCCESS.getErrorMessage());
+		
+		try {
+			orderService.cancelOrder(requestUser.getSession().getUserNo(), orderCode);
 		} catch(Exception e) {
 			throw new ApiException(RtCode.RT_INTERNAL_ERROR);
 		}

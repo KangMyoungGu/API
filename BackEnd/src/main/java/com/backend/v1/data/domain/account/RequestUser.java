@@ -12,6 +12,7 @@ public class RequestUser implements UserDetails {
 	
 	private final String prefix = "ROLE_";
 	
+	private SessionDomain session;
 	private String userId;
 	private List<GrantedAuthority> authorities;
 	
@@ -20,6 +21,7 @@ public class RequestUser implements UserDetails {
 		this.authorities = new ArrayList<GrantedAuthority>();
 		
 		this.userId = session.getUserId();
+		this.session = session;
 		this.authorities.add(new SimpleGrantedAuthority(prefix + session.getRole()));
 	}
 	
@@ -60,5 +62,9 @@ public class RequestUser implements UserDetails {
 	
 	public String getUserId() {
 		return this.userId;
+	}
+	
+	public SessionDomain getSession() {
+		return this.session;
 	}
 }
